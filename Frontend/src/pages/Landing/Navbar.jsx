@@ -1,5 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import ThemeToggle, {
+  ThemeToggleSwitch,
+} from "../../components/common/ThemeToggle";
 
 // ============================================
 // NAVIGATION COMPONENT
@@ -70,7 +73,7 @@ const Logo = ({ scrolled }) => (
 );
 
 // Alternative Elegant Logo Options
-const LogoVariant2 = ({ scrolled }) => (
+const LogoVariant2 = () => (
   <a href="#" className="flex items-center gap-2.5 group">
     <div className="relative">
       <div
@@ -127,7 +130,7 @@ const LogoVariant2 = ({ scrolled }) => (
 );
 
 // Minimal Elegant Logo
-const LogoVariant3 = ({ scrolled }) => (
+const LogoVariant3 = () => (
   <a href="#" className="flex items-center gap-3 group">
     <div className="relative">
       <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-primary-800 shadow-lg group-hover:shadow-xl transition-all duration-300">
@@ -163,23 +166,29 @@ const LogoVariant3 = ({ scrolled }) => (
   </a>
 );
 
-// Icons
+// Minimal Elegant Animated Icons
 const Icons = {
-  Menu: () => (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    >
-      <line x1="4" y1="6" x2="20" y2="6" />
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <line x1="4" y1="18" x2="20" y2="18" />
-    </svg>
+  // Clean hamburger to X animation using CSS
+  Menu: ({ isOpen }) => (
+    <div className="w-6 h-6 flex flex-col justify-center items-center">
+      <span
+        className={`block h-0.5 w-5 bg-current rounded-full transition-all duration-300 ease-out ${
+          isOpen ? "rotate-45 translate-y-1" : ""
+        }`}
+      />
+      <span
+        className={`block h-0.5 w-5 bg-current rounded-full transition-all duration-300 ease-out my-1 ${
+          isOpen ? "opacity-0 scale-0" : ""
+        }`}
+      />
+      <span
+        className={`block h-0.5 w-5 bg-current rounded-full transition-all duration-300 ease-out ${
+          isOpen ? "-rotate-45 -translate-y-1" : ""
+        }`}
+      />
+    </div>
   ),
+  // Simple close icon
   X: () => (
     <svg
       width="24"
@@ -187,13 +196,14 @@ const Icons = {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.5"
+      strokeWidth="2"
       strokeLinecap="round"
     >
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
     </svg>
   ),
+  // Minimal arrow
   ArrowRight: () => (
     <svg
       width="16"
@@ -204,74 +214,11 @@ const Icons = {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className="transition-transform duration-200 group-hover:translate-x-0.5"
     >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
+      <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   ),
-};
-
-// Animated Theme Toggle Button Component
-const ThemeToggle = ({ isDark, toggleTheme }) => {
-  return (
-    <button
-      onClick={toggleTheme}
-      className="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-secondary-100 dark:hover:bg-dark-surface-light group"
-      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-    >
-      {/* Sun Icon */}
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={`absolute text-amber-500 transition-all duration-500 ${
-          isDark
-            ? "opacity-0 rotate-90 scale-0"
-            : "opacity-100 rotate-0 scale-100"
-        }`}
-      >
-        <circle cx="12" cy="12" r="5" className="fill-amber-400/20" />
-        <line x1="12" y1="1" x2="12" y2="3" />
-        <line x1="12" y1="21" x2="12" y2="23" />
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-        <line x1="1" y1="12" x2="3" y2="12" />
-        <line x1="21" y1="12" x2="23" y2="12" />
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-      </svg>
-
-      {/* Moon Icon */}
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={`absolute text-primary-400 transition-all duration-500 ${
-          isDark
-            ? "opacity-100 rotate-0 scale-100"
-            : "opacity-0 -rotate-90 scale-0"
-        }`}
-      >
-        <path
-          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-          className="fill-primary-400/20"
-        />
-      </svg>
-
-      {/* Hover ring effect */}
-      <span className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-primary-300 dark:group-hover:border-primary-500 transition-all duration-300 scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100" />
-    </button>
-  );
 };
 
 // Nav links configuration
@@ -418,8 +365,12 @@ const Navigation = () => {
 
             {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-3">
-              {/* Theme Toggle */}
-              <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+              {/* Professional Theme Toggle */}
+              <ThemeToggle
+                isDark={isDark}
+                toggleTheme={toggleTheme}
+                size="default"
+              />
 
               <a
                 href="/login"
@@ -427,38 +378,23 @@ const Navigation = () => {
               >
                 Log in
               </a>
-              <button className="group flex items-center gap-2 px-5 py-2.5 bg-primary-600 dark:bg-primary-500 text-white text-sm font-medium rounded-full transition-all duration-300 hover:bg-primary-700 dark:hover:bg-primary-600 hover:shadow-lg hover:shadow-primary-600/20">
+              <button className="group flex items-center gap-2 px-5 py-2.5 bg-primary-600 dark:bg-primary-500 text-white text-sm font-medium rounded-full transition-all duration-300 hover:bg-primary-700 dark:hover:bg-primary-600 hover:shadow-lg hover:shadow-primary-600/20 active:scale-[0.98]">
                 <span>Get Started</span>
-                <span className="group-hover:translate-x-0.5 transition-transform duration-300">
-                  <Icons.ArrowRight />
-                </span>
+                <Icons.ArrowRight />
               </button>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Minimal Animated Hamburger */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`md:hidden relative w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300 ${
+              className={`md:hidden relative w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 ${
                 menuOpen
                   ? "bg-secondary-200 dark:bg-dark-surface-light text-text-primary dark:text-dark-text"
                   : "text-text-secondary dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text hover:bg-secondary-100 dark:hover:bg-dark-surface-light"
-              }`}
+              } active:scale-95`}
               aria-label="Toggle menu"
             >
-              <span
-                className={`absolute transition-all duration-300 ${
-                  menuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
-                }`}
-              >
-                <Icons.Menu />
-              </span>
-              <span
-                className={`absolute transition-all duration-300 ${
-                  menuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"
-                }`}
-              >
-                <Icons.X />
-              </span>
+              <Icons.Menu isOpen={menuOpen} />
             </button>
           </div>
         </div>
@@ -515,72 +451,9 @@ const Navigation = () => {
             </button>
           </div>
 
-          {/* Mobile Theme Toggle */}
+          {/* Mobile Theme Toggle - Professional Switch Style */}
           <div className="mt-6 pt-6 border-t border-secondary-200 dark:border-dark-border">
-            <button
-              onClick={toggleTheme}
-              className="w-full flex items-center justify-between py-3 text-text-secondary dark:text-dark-text-muted hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
-            >
-              <span className="flex items-center gap-3">
-                {isDark ? (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-primary-400"
-                  >
-                    <path
-                      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
-                      className="fill-primary-400/20"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-amber-500"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="5"
-                      className="fill-amber-400/20"
-                    />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                  </svg>
-                )}
-                <span>{isDark ? "Dark Mode" : "Light Mode"}</span>
-              </span>
-              <div
-                className={`w-11 h-6 rounded-full p-0.5 transition-colors duration-300 ${
-                  isDark ? "bg-primary-600" : "bg-secondary-300"
-                }`}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
-                    isDark ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </div>
-            </button>
+            <ThemeToggleSwitch isDark={isDark} toggleTheme={toggleTheme} />
           </div>
 
           {/* Mobile Footer Info */}

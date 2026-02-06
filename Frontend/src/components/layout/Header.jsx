@@ -10,8 +10,6 @@ import {
   IoPersonOutline,
   IoChevronDown,
   IoClose,
-  IoMoonOutline,
-  IoSunnyOutline,
   IoSparkles,
   IoTrendingUp,
   IoCheckmarkCircle,
@@ -24,6 +22,7 @@ import {
 } from "react-icons/io5";
 import { useAuth } from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
+import ThemeToggle from "../common/ThemeToggle";
 
 const searchSuggestions = [
   {
@@ -261,24 +260,12 @@ const Header = () => {
               <IoSearchOutline className="w-5 h-5" />
             </motion.button>
 
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleTheme}
-              className={`p-2.5 rounded-xl transition-all ${
-                isDark
-                  ? "text-yellow-400 hover:text-yellow-300 hover:bg-dark-surface-light"
-                  : "text-text-muted hover:text-text-primary hover:bg-surface-100"
-              }`}
-              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {theme === "dark" ? (
-                <IoSunnyOutline className="w-5 h-5" />
-              ) : (
-                <IoMoonOutline className="w-5 h-5" />
-              )}
-            </motion.button>
+            {/* Professional Theme Toggle */}
+            <ThemeToggle
+              isDark={isDark}
+              toggleTheme={toggleTheme}
+              size="default"
+            />
 
             {/* Notifications */}
             <div className="relative" ref={notificationRef}>

@@ -183,6 +183,20 @@
         scroll-behavior: smooth;
     }
 
+    /* Smooth Theme Transition - No flash, just seamless color morphing */
+    html.theme-transition,
+    html.theme-transition *,
+    html.theme-transition *::before,
+    html.theme-transition *::after {
+        transition:
+            background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            fill 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            stroke 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+            box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+
     body {
         background-color: #f0efe6;
         color: #112f3a;
