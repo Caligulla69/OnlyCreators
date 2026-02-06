@@ -125,22 +125,22 @@ const FinalCTA = () => {
   return (
     <section
       ref={ref}
-      className="relative py-20 sm:py-28 md:py-36 px-4 sm:px-6 bg-secondary-100 overflow-hidden"
+      className="relative py-20 sm:py-28 md:py-36 px-4 sm:px-6 bg-secondary-100 dark:bg-dark-bg overflow-hidden"
     >
       {/* Subtle Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary-100/40 via-secondary-100/30 to-accent-100/40 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary-100/40 via-secondary-100/30 to-accent-100/40 dark:from-primary-800/20 dark:via-dark-bg/30 dark:to-accent-800/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-3xl mx-auto text-center">
         {/* Decorative Element */}
         <FadeIn>
           <div className="flex justify-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full">
-              <span className="text-primary-500">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 dark:bg-primary-900/30 rounded-full">
+              <span className="text-primary-500 dark:text-primary-400">
                 <Icons.Sparkles />
               </span>
-              <span className="text-sm font-medium text-primary-700">
+              <span className="text-sm font-medium text-primary-700 dark:text-primary-300">
                 Start your journey today
               </span>
             </div>
@@ -149,16 +149,18 @@ const FinalCTA = () => {
 
         {/* Main Headline */}
         <FadeIn delay={100}>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary leading-tight mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary dark:text-dark-text leading-tight mb-6">
             Ready to write your
             <br />
-            <span className="italic text-primary-600">success story?</span>
+            <span className="italic text-primary-600 dark:text-primary-400">
+              success story?
+            </span>
           </h2>
         </FadeIn>
 
         {/* Subheadline */}
         <FadeIn delay={200}>
-          <p className="text-lg sm:text-xl text-text-muted max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg sm:text-xl text-text-muted dark:text-dark-text-muted max-w-xl mx-auto mb-10 leading-relaxed">
             Join 15,000+ creators who transformed their content strategy.
           </p>
         </FadeIn>
@@ -166,15 +168,15 @@ const FinalCTA = () => {
         {/* CTA Button */}
         <FadeIn delay={300}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-            <button className="group w-full sm:w-auto px-8 py-4 bg-primary-600 text-white rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-600/20 flex items-center justify-center gap-3">
+            <button className="group w-full sm:w-auto px-8 py-4 bg-primary-600 dark:bg-primary-500 text-white rounded-full text-base sm:text-lg font-medium transition-all duration-300 hover:bg-primary-700 dark:hover:bg-primary-600 hover:shadow-xl hover:shadow-primary-600/20 flex items-center justify-center gap-3">
               <span>Get Started Free</span>
               <span className="group-hover:translate-x-1 transition-transform duration-300">
                 <Icons.ArrowRight />
               </span>
             </button>
 
-            <button className="w-full sm:w-auto px-8 py-4 text-text-secondary rounded-full text-base sm:text-lg font-medium border border-secondary-300 transition-all duration-300 hover:border-primary-300 hover:bg-secondary-50 flex items-center justify-center gap-3">
-              <span className="w-8 h-8 rounded-full bg-secondary-200 flex items-center justify-center">
+            <button className="w-full sm:w-auto px-8 py-4 text-text-secondary dark:text-dark-text-muted rounded-full text-base sm:text-lg font-medium border border-secondary-300 dark:border-dark-border transition-all duration-300 hover:border-primary-300 dark:hover:border-primary-500 hover:bg-secondary-50 dark:hover:bg-dark-surface-light flex items-center justify-center gap-3">
+              <span className="w-8 h-8 rounded-full bg-secondary-200 dark:bg-dark-surface-light flex items-center justify-center">
                 <Icons.Play />
               </span>
               <span>Watch Demo</span>
@@ -184,10 +186,10 @@ const FinalCTA = () => {
 
         {/* Trust Badges */}
         <FadeIn delay={400}>
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-text-light">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-text-light dark:text-dark-text-muted">
             {trustBadges.map((badge, i) => (
               <div key={i} className="flex items-center gap-2">
-                <span className="text-success-500">
+                <span className="text-success-500 dark:text-success-400">
                   <Icons.Check />
                 </span>
                 <span>{badge}</span>

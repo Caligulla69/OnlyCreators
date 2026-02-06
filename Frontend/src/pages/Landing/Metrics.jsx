@@ -94,17 +94,21 @@ const StatCard = ({ stat, index, isInView }) => {
       <div className="mb-3">
         <span className="text-4xl text-white/60 sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
           {stat.value >= 1000 ? formatNumber(count) : count}
-          <span className="text-accent-500">{stat.suffix}</span>
+          <span className="text-accent-500 dark:text-accent-400">
+            {stat.suffix}
+          </span>
         </span>
       </div>
 
       {/* Label */}
-      <div className="text-lg sm:text-xl font-semibold text-primary-800 mb-1">
+      <div className="text-lg sm:text-xl font-semibold text-primary-800 dark:text-primary-200 mb-1">
         {stat.label}
       </div>
 
       {/* Description */}
-      <div className="text-sm text-text-muted">{stat.description}</div>
+      <div className="text-sm text-text-muted dark:text-dark-text-muted">
+        {stat.description}
+      </div>
     </div>
   );
 };
@@ -135,12 +139,12 @@ const Metrics = () => {
   return (
     <section
       ref={ref}
-      className="relative py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-primary-700 overflow-hidden"
+      className="relative py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-primary-700 dark:bg-primary-900 overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-600 to-primary-700" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-600 to-primary-700 dark:from-primary-900 dark:via-primary-800 dark:to-primary-900" />
 
         {/* Subtle Grid Pattern */}
         <div
@@ -153,8 +157,8 @@ const Metrics = () => {
         />
 
         {/* Gradient Orbs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-500/10 dark:bg-accent-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary-400/10 dark:bg-primary-400/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-6xl mx-auto">
@@ -164,11 +168,14 @@ const Metrics = () => {
             isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-primary-300 mb-4">
+          <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-primary-300 dark:text-primary-400 mb-4">
             The Numbers
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white">
-            Growth in <span className="italic text-accent-400">numbers</span>
+            Growth in{" "}
+            <span className="italic text-accent-400 dark:text-accent-300">
+              numbers
+            </span>
           </h2>
         </div>
 
@@ -187,9 +194,9 @@ const Metrics = () => {
           style={{ transitionDelay: "800ms" }}
         >
           <div className="flex items-center gap-4">
-            <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent to-primary-400" />
-            <div className="w-2 h-2 rounded-full bg-accent-500" />
-            <div className="w-12 sm:w-16 h-px bg-gradient-to-l from-transparent to-primary-400" />
+            <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent to-primary-400 dark:to-primary-500" />
+            <div className="w-2 h-2 rounded-full bg-accent-500 dark:bg-accent-400" />
+            <div className="w-12 sm:w-16 h-px bg-gradient-to-l from-transparent to-primary-400 dark:to-primary-500" />
           </div>
         </div>
       </div>

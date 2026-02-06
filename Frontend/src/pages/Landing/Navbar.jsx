@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { useTheme } from "../../context/ThemeContext";
 
 // ============================================
 // NAVIGATION COMPONENT
@@ -54,12 +55,14 @@ const Logo = ({ scrolled }) => (
     <div className="flex items-baseline">
       <span
         className={`text-lg sm:text-xl font-semibold tracking-tight transition-colors duration-300 ${
-          scrolled ? "text-text-primary" : "text-text-primary"
+          scrolled
+            ? "text-text-primary dark:text-dark-text"
+            : "text-text-primary dark:text-dark-text"
         }`}
       >
         Only
       </span>
-      <span className="text-lg sm:text-xl font-semibold tracking-tight text-primary-600">
+      <span className="text-lg sm:text-xl font-semibold tracking-tight text-primary-600 dark:text-primary-400">
         Creators
       </span>
     </div>
@@ -113,10 +116,10 @@ const LogoVariant2 = ({ scrolled }) => (
     </div>
 
     <div className="flex items-baseline">
-      <span className="text-lg sm:text-xl font-semibold tracking-tight text-text-primary">
+      <span className="text-lg sm:text-xl font-semibold tracking-tight text-text-primary dark:text-dark-text">
         Only
       </span>
-      <span className="text-lg sm:text-xl font-semibold tracking-tight text-primary-600">
+      <span className="text-lg sm:text-xl font-semibold tracking-tight text-primary-600 dark:text-primary-400">
         Creators
       </span>
     </div>
@@ -153,8 +156,9 @@ const LogoVariant3 = ({ scrolled }) => (
       </div>
     </div>
 
-    <span className="text-lg sm:text-xl font-semibold tracking-tight text-text-primary">
-      Only<span className="text-primary-600">Creators</span>
+    <span className="text-lg sm:text-xl font-semibold tracking-tight text-text-primary dark:text-dark-text">
+      Only
+      <span className="text-primary-600 dark:text-primary-400">Creators</span>
     </span>
   </a>
 );
@@ -207,6 +211,69 @@ const Icons = {
   ),
 };
 
+// Animated Theme Toggle Button Component
+const ThemeToggle = ({ isDark, toggleTheme }) => {
+  return (
+    <button
+      onClick={toggleTheme}
+      className="relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:bg-secondary-100 dark:hover:bg-dark-surface-light group"
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      {/* Sun Icon */}
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={`absolute text-amber-500 transition-all duration-500 ${
+          isDark
+            ? "opacity-0 rotate-90 scale-0"
+            : "opacity-100 rotate-0 scale-100"
+        }`}
+      >
+        <circle cx="12" cy="12" r="5" className="fill-amber-400/20" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+
+      {/* Moon Icon */}
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={`absolute text-primary-400 transition-all duration-500 ${
+          isDark
+            ? "opacity-100 rotate-0 scale-100"
+            : "opacity-0 -rotate-90 scale-0"
+        }`}
+      >
+        <path
+          d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+          className="fill-primary-400/20"
+        />
+      </svg>
+
+      {/* Hover ring effect */}
+      <span className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-primary-300 dark:group-hover:border-primary-500 transition-all duration-300 scale-90 group-hover:scale-100 opacity-0 group-hover:opacity-100" />
+    </button>
+  );
+};
+
 // Nav links configuration
 const navLinks = [
   { label: "Story", href: "#story" },
@@ -237,16 +304,16 @@ const NavLink = ({ href, label, scrolled }) => {
       href={href}
       className={`relative px-1 py-2 text-sm font-medium transition-colors duration-300 ${
         isActive
-          ? "text-primary-600"
+          ? "text-primary-600 dark:text-primary-400"
           : scrolled
-            ? "text-text-secondary hover:text-text-primary"
-            : "text-text-secondary hover:text-text-primary"
+            ? "text-text-secondary dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text"
+            : "text-text-secondary dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text"
       }`}
     >
       {label}
       {/* Active indicator */}
       <span
-        className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 rounded-full transition-transform duration-300 origin-left ${
+        className={`absolute bottom-0 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400 rounded-full transition-transform duration-300 origin-left ${
           isActive ? "scale-x-100" : "scale-x-0"
         }`}
       />
@@ -259,7 +326,7 @@ const MobileNavLink = ({ href, label, onClick, index }) => (
   <a
     href={href}
     onClick={onClick}
-    className="block py-3 text-text-secondary hover:text-primary-600 font-medium transition-colors duration-200 border-b border-secondary-200 last:border-0"
+    className="block py-3 text-text-secondary dark:text-dark-text-muted hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200 border-b border-secondary-200 dark:border-dark-border last:border-0"
     style={{ animationDelay: `${index * 50}ms` }}
   >
     {label}
@@ -268,6 +335,7 @@ const MobileNavLink = ({ href, label, onClick, index }) => (
 
 // Main Navigation Component
 const Navigation = () => {
+  const { isDark, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -327,7 +395,7 @@ const Navigation = () => {
           hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"
         } ${
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-sm border-b border-secondary-200/50"
+            ? "bg-white/80 dark:bg-dark-surface/80 backdrop-blur-xl shadow-sm border-b border-secondary-200/50 dark:border-dark-border/50"
             : "bg-transparent"
         }`}
       >
@@ -349,14 +417,17 @@ const Navigation = () => {
             </div>
 
             {/* Desktop CTA */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-3">
+              {/* Theme Toggle */}
+              <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+
               <a
                 href="/login"
-                className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
+                className="text-sm font-medium text-text-secondary dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text transition-colors"
               >
                 Log in
               </a>
-              <button className="group flex items-center gap-2 px-5 py-2.5 bg-primary-600 text-white text-sm font-medium rounded-full transition-all duration-300 hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-600/20">
+              <button className="group flex items-center gap-2 px-5 py-2.5 bg-primary-600 dark:bg-primary-500 text-white text-sm font-medium rounded-full transition-all duration-300 hover:bg-primary-700 dark:hover:bg-primary-600 hover:shadow-lg hover:shadow-primary-600/20">
                 <span>Get Started</span>
                 <span className="group-hover:translate-x-0.5 transition-transform duration-300">
                   <Icons.ArrowRight />
@@ -369,8 +440,8 @@ const Navigation = () => {
               onClick={() => setMenuOpen(!menuOpen)}
               className={`md:hidden relative w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-300 ${
                 menuOpen
-                  ? "bg-secondary-200 text-text-primary"
-                  : "text-text-secondary hover:text-text-primary hover:bg-secondary-100"
+                  ? "bg-secondary-200 dark:bg-dark-surface-light text-text-primary dark:text-dark-text"
+                  : "text-text-secondary dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text hover:bg-secondary-100 dark:hover:bg-dark-surface-light"
               }`}
               aria-label="Toggle menu"
             >
@@ -395,7 +466,7 @@ const Navigation = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/20 dark:bg-black/50 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300 ${
           menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMenuOpen(false)}
@@ -403,16 +474,16 @@ const Navigation = () => {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white z-50 md:hidden transition-transform duration-500 ease-out shadow-2xl ${
+        className={`fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white dark:bg-dark-surface z-50 md:hidden transition-transform duration-500 ease-out shadow-2xl ${
           menuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Mobile Menu Header */}
-        <div className="flex items-center justify-between p-4 border-b border-secondary-200">
+        <div className="flex items-center justify-between p-4 border-b border-secondary-200 dark:border-dark-border">
           <Logo scrolled={true} />
           <button
             onClick={() => setMenuOpen(false)}
-            className="w-10 h-10 flex items-center justify-center rounded-full text-text-secondary hover:text-text-primary hover:bg-secondary-100 transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-full text-text-secondary dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text hover:bg-secondary-100 dark:hover:bg-dark-surface-light transition-colors"
           >
             <Icons.X />
           </button>
@@ -435,18 +506,86 @@ const Navigation = () => {
 
           {/* Mobile CTAs */}
           <div className="space-y-3">
-            <button className="w-full py-3.5 bg-primary-600 text-white rounded-full font-medium transition-all hover:bg-primary-700 flex items-center justify-center gap-2">
+            <button className="w-full py-3.5 bg-primary-600 dark:bg-primary-500 text-white rounded-full font-medium transition-all hover:bg-primary-700 dark:hover:bg-primary-600 flex items-center justify-center gap-2">
               <span>Get Started Free</span>
               <Icons.ArrowRight />
             </button>
-            <button className="w-full py-3.5 text-text-secondary rounded-full font-medium border border-secondary-300 transition-all hover:bg-secondary-50">
+            <button className="w-full py-3.5 text-text-secondary dark:text-dark-text-muted rounded-full font-medium border border-secondary-300 dark:border-dark-border transition-all hover:bg-secondary-50 dark:hover:bg-dark-surface-light">
               Log in
             </button>
           </div>
 
+          {/* Mobile Theme Toggle */}
+          <div className="mt-6 pt-6 border-t border-secondary-200 dark:border-dark-border">
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center justify-between py-3 text-text-secondary dark:text-dark-text-muted hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors duration-200"
+            >
+              <span className="flex items-center gap-3">
+                {isDark ? (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-primary-400"
+                  >
+                    <path
+                      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                      className="fill-primary-400/20"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="text-amber-500"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="5"
+                      className="fill-amber-400/20"
+                    />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                  </svg>
+                )}
+                <span>{isDark ? "Dark Mode" : "Light Mode"}</span>
+              </span>
+              <div
+                className={`w-11 h-6 rounded-full p-0.5 transition-colors duration-300 ${
+                  isDark ? "bg-primary-600" : "bg-secondary-300"
+                }`}
+              >
+                <div
+                  className={`w-5 h-5 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+                    isDark ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
+
           {/* Mobile Footer Info */}
-          <div className="mt-12 pt-8 border-t border-secondary-200">
-            <p className="text-sm text-text-light text-center">
+          <div className="mt-12 pt-8 border-t border-secondary-200 dark:border-dark-border">
+            <p className="text-sm text-text-light dark:text-dark-text-muted text-center">
               Join 15,000+ creators
             </p>
           </div>

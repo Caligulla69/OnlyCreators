@@ -170,7 +170,7 @@ const Logo = memo(() => (
   >
     {/* Logo Mark */}
     <div className="relative">
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-primary-600 shadow-lg shadow-primary-500/20 transition-all duration-300 group-hover:shadow-primary-500/40 group-hover:scale-105">
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-primary-600 dark:bg-primary-500 shadow-lg shadow-primary-500/20 transition-all duration-300 group-hover:shadow-primary-500/40 group-hover:scale-105">
         <svg
           width="22"
           height="22"
@@ -206,10 +206,10 @@ const Logo = memo(() => (
 
     {/* Logo Text */}
     <div className="flex items-baseline">
-      <span className="text-xl font-semibold tracking-tight text-text-primary transition-colors">
+      <span className="text-xl font-semibold tracking-tight text-text-primary dark:text-dark-text transition-colors">
         Only
       </span>
-      <span className="text-xl font-semibold tracking-tight text-primary-600">
+      <span className="text-xl font-semibold tracking-tight text-primary-600 dark:text-primary-400">
         Creators
       </span>
     </div>
@@ -231,7 +231,7 @@ const SocialLinks = memo(() => (
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Follow us on ${name}`}
-            className="group relative w-10 h-10 bg-white rounded-xl flex items-center justify-center text-text-muted border border-secondary-300 transition-all duration-300 hover:text-primary-600 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/10 hover:-translate-y-0.5"
+            className="group relative w-10 h-10 bg-white dark:bg-dark-surface rounded-xl flex items-center justify-center text-text-muted dark:text-dark-text-muted border border-secondary-300 dark:border-dark-border transition-all duration-300 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-300 dark:hover:border-primary-500 hover:shadow-lg hover:shadow-primary-500/10 hover:-translate-y-0.5"
           >
             <Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
 
@@ -253,7 +253,7 @@ SocialLinks.displayName = "SocialLinks";
 // ============================================================================
 const NavigationColumn = memo(({ title, links }) => (
   <div>
-    <h3 className="font-semibold text-text-primary mb-4 text-sm uppercase tracking-wider">
+    <h3 className="font-semibold text-text-primary dark:text-dark-text mb-4 text-sm uppercase tracking-wider">
       {title}
     </h3>
     <ul className="space-y-3" role="list">
@@ -265,11 +265,11 @@ const NavigationColumn = memo(({ title, links }) => (
               target: "_blank",
               rel: "noopener noreferrer",
             })}
-            className="group inline-flex items-center gap-1 text-text-muted hover:text-primary-600 transition-all duration-200 text-sm"
+            className="group inline-flex items-center gap-1 text-text-muted dark:text-dark-text-muted hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 text-sm"
           >
             <span className="relative">
               {label}
-              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary-600 transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-primary-600 dark:bg-primary-400 transition-all duration-300 group-hover:w-full" />
             </span>
             {isExternal && (
               <Icons.ExternalLink className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
@@ -331,7 +331,7 @@ const Newsletter = memo(() => {
 
   return (
     <section
-      className="py-10 border-t  border-b border-gray-200/60"
+      className="py-10 border-t border-b border-gray-200/60 dark:border-dark-border"
       aria-labelledby="newsletter-heading"
     >
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -339,11 +339,11 @@ const Newsletter = memo(() => {
         <div className="text-center lg:text-left">
           <h3
             id="newsletter-heading"
-            className="font-semibold text-gray-900 mb-2 text-lg"
+            className="font-semibold text-gray-900 dark:text-dark-text mb-2 text-lg"
           >
             Stay in the loop
           </h3>
-          <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
+          <p className="text-gray-500 dark:text-dark-text-muted text-sm max-w-sm leading-relaxed">
             Get creator insights, growth strategies, and platform updates
             delivered weekly.
           </p>
@@ -362,7 +362,7 @@ const Newsletter = memo(() => {
               placeholder="Enter your email"
               required
               disabled={isDisabled}
-              className="w-full px-5 py-3.5 rounded-xl border border-secondary-200 bg-white focus:border-primary-400 focus:ring-4 focus:ring-primary-100 outline-none transition-all duration-200 text-sm placeholder:text-text-light disabled:opacity-60 disabled:cursor-not-allowed"
+              className="w-full px-5 py-3.5 rounded-xl border border-secondary-200 dark:border-dark-border bg-white dark:bg-dark-surface dark:text-dark-text focus:border-primary-400 dark:focus:border-primary-500 focus:ring-4 focus:ring-primary-100 dark:focus:ring-primary-900/30 outline-none transition-all duration-200 text-sm placeholder:text-text-light dark:placeholder:text-dark-text-muted disabled:opacity-60 disabled:cursor-not-allowed"
               aria-label="Email address"
             />
           </div>
@@ -370,7 +370,7 @@ const Newsletter = memo(() => {
           <button
             type="submit"
             disabled={isDisabled}
-            className="relative px-7 py-3.5 bg-primary-600 text-white rounded-xl font-medium transition-all duration-300 text-sm whitespace-nowrap overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-primary-500/25 hover:-translate-y-0.5 active:translate-y-0"
+            className="relative px-7 py-3.5 bg-primary-600 dark:bg-primary-500 text-white rounded-xl font-medium transition-all duration-300 text-sm whitespace-nowrap overflow-hidden disabled:opacity-60 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-primary-500/25 hover:-translate-y-0.5 active:translate-y-0"
           >
             <span
               className={`inline-flex items-center justify-center gap-2 transition-all duration-300 ${
@@ -421,7 +421,7 @@ const LegalLinks = memo(() => (
         <li key={label}>
           <a
             href={href}
-            className="text-text-light hover:text-primary-600 transition-colors duration-200 text-sm"
+            className="text-text-light dark:text-dark-text-muted hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm"
           >
             {label}
           </a>
@@ -441,12 +441,12 @@ const Footer = () => {
 
   return (
     <footer
-      className="relative bg-secondary-100 border-t border-secondary-300"
+      className="relative bg-secondary-100 dark:bg-dark-bg border-t border-secondary-300 dark:border-dark-border"
       role="contentinfo"
     >
       {/* Subtle background pattern */}
       <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(30,77,94,0.03)_1px,_transparent_0)] bg-[size:24px_24px] pointer-events-none"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,_rgba(30,77,94,0.03)_1px,_transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,_rgba(255,255,255,0.03)_1px,_transparent_0)] bg-[size:24px_24px] pointer-events-none"
         aria-hidden="true"
       />
 
@@ -456,7 +456,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="col-span-2 space-y-6">
             <Logo />
-            <p className="text-text-muted max-w-xs leading-relaxed text-sm">
+            <p className="text-text-muted dark:text-dark-text-muted max-w-xs leading-relaxed text-sm">
               Your story, amplified by AI. Analytics and insights that help
               creators understand their audience and grow their influence.
             </p>
@@ -478,7 +478,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 text-sm">
-          <p className="text-text-light order-2 md:order-1">
+          <p className="text-text-light dark:text-dark-text-muted order-2 md:order-1">
             © {currentYear} OnlyCreators. Crafted with purpose.
           </p>
           <div className="order-1 md:order-2">
@@ -487,8 +487,8 @@ const Footer = () => {
         </div>
 
         {/* Poetic Closing */}
-        <div className="text-center mt-16 pt-8 border-t border-secondary-300/60">
-          <p className="text-secondary-500 font-serif italic text-sm tracking-wide select-none">
+        <div className="text-center mt-16 pt-8 border-t border-secondary-300/60 dark:border-dark-border/60">
+          <p className="text-secondary-500 dark:text-secondary-400 font-serif italic text-sm tracking-wide select-none">
             — Where every page ends, your story begins —
           </p>
         </div>

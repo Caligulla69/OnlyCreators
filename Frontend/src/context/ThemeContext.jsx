@@ -14,9 +14,8 @@ export const ThemeProvider = ({ children }) => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
       if (saved) return saved;
-      return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light";
+      // Default to light mode for new users
+      return "light";
     }
     return "light";
   });

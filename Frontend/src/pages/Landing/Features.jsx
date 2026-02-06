@@ -258,7 +258,7 @@ const FeatureCard = ({ feature, isActive, onClick, style, isMobile }) => {
         onClick={onClick}
       >
         <div
-          className={`h-full rounded-2xl bg-gradient-to-br ${cardBg} border border-white/50 shadow-xl p-6 flex flex-col`}
+          className={`h-full rounded-2xl bg-gradient-to-br ${cardBg} dark:from-dark-surface dark:to-dark-surface-light border border-white/50 dark:border-dark-border shadow-xl p-6 flex flex-col`}
         >
           {/* Icon */}
           <div
@@ -268,17 +268,21 @@ const FeatureCard = ({ feature, isActive, onClick, style, isMobile }) => {
           </div>
 
           {/* Content */}
-          <h3 className="text-lg font-bold text-gray-900 mb-2">{title}</h3>
-          <p className="text-gray-600 text-sm leading-relaxed mb-5 flex-1">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-dark-text mb-2">
+            {title}
+          </h3>
+          <p className="text-gray-600 dark:text-dark-text-muted text-sm leading-relaxed mb-5 flex-1">
             {story}
           </p>
 
           {/* Benefit badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white/80 backdrop-blur shadow-sm w-fit">
+          <div className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-white/80 dark:bg-dark-surface/80 backdrop-blur shadow-sm w-fit">
             <span className={accentColor}>
               <Icons.Sparkles />
             </span>
-            <span className="text-sm font-medium text-gray-700">{benefit}</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-dark-text">
+              {benefit}
+            </span>
           </div>
         </div>
       </div>
@@ -293,11 +297,11 @@ const FeatureCard = ({ feature, isActive, onClick, style, isMobile }) => {
       onClick={onClick}
     >
       <div
-        className={`h-[380px] lg:h-[420px] rounded-3xl bg-gradient-to-br ${cardBg} border border-white/50 shadow-2xl p-6 lg:p-8 flex flex-col relative overflow-hidden group`}
+        className={`h-[380px] lg:h-[420px] rounded-3xl bg-gradient-to-br ${cardBg} dark:from-dark-surface dark:to-dark-surface-light border border-white/50 dark:border-dark-border shadow-2xl p-6 lg:p-8 flex flex-col relative overflow-hidden group`}
       >
         {/* Hover glow effect */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${cardBg} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+          className={`absolute inset-0 bg-gradient-to-br ${cardBg} dark:from-dark-surface-light dark:to-dark-surface opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
         />
 
         {/* Icon */}
@@ -308,26 +312,28 @@ const FeatureCard = ({ feature, isActive, onClick, style, isMobile }) => {
         </div>
 
         {/* Content */}
-        <h3 className="relative z-10 text-lg lg:text-xl font-bold text-gray-900 mb-2 lg:mb-3">
+        <h3 className="relative z-10 text-lg lg:text-xl font-bold text-gray-900 dark:text-dark-text mb-2 lg:mb-3">
           {title}
         </h3>
-        <p className="relative z-10 text-gray-600 text-sm leading-relaxed mb-5 lg:mb-6 flex-1">
+        <p className="relative z-10 text-gray-600 dark:text-dark-text-muted text-sm leading-relaxed mb-5 lg:mb-6 flex-1">
           {story}
         </p>
 
         {/* Benefit badge */}
-        <div className="relative z-10 inline-flex items-center gap-2 px-3 lg:px-4 py-2 rounded-full bg-white/80 backdrop-blur shadow-sm w-fit group-hover:shadow-md transition-shadow duration-300">
+        <div className="relative z-10 inline-flex items-center gap-2 px-3 lg:px-4 py-2 rounded-full bg-white/80 dark:bg-dark-surface/80 backdrop-blur shadow-sm w-fit group-hover:shadow-md transition-shadow duration-300">
           <span className={accentColor}>
             <Icons.Sparkles />
           </span>
-          <span className="text-sm font-medium text-gray-700">{benefit}</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-dark-text">
+            {benefit}
+          </span>
         </div>
 
         {/* Reflection effect */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/20 to-transparent rounded-b-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/20 dark:from-white/5 to-transparent rounded-b-3xl pointer-events-none" />
 
         {/* Card number indicator */}
-        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/50 backdrop-blur flex items-center justify-center text-xs font-medium text-gray-500">
+        <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/50 dark:bg-dark-surface-light/50 backdrop-blur flex items-center justify-center text-xs font-medium text-gray-500 dark:text-dark-text-muted">
           {feature.id}
         </div>
       </div>
@@ -343,10 +349,10 @@ const NavButton = ({ direction, onClick, disabled }) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white border border-secondary-200 flex items-center justify-center transition-all duration-300 ${
+      className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white dark:bg-dark-surface border border-secondary-200 dark:border-dark-border flex items-center justify-center transition-all duration-300 ${
         disabled
           ? "opacity-50 cursor-not-allowed"
-          : "hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/10 hover:-translate-y-0.5 active:scale-95"
+          : "hover:border-primary-300 dark:hover:border-primary-500 hover:shadow-lg hover:shadow-primary-500/10 hover:-translate-y-0.5 active:scale-95"
       }`}
       aria-label={isLeft ? "Previous feature" : "Next feature"}
     >
@@ -548,26 +554,26 @@ const Features = () => {
     <section
       ref={ref}
       id="features"
-      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 overflow-hidden"
+      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 dark:bg-dark-bg overflow-hidden"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-primary-200">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-primary-200 dark:border-primary-700">
               <Icons.Book />
               <span>Chapter Three</span>
             </span>
           </FadeIn>
 
           <FadeIn delay={100}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary mb-3 sm:mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary dark:text-dark-text mb-3 sm:mb-4">
               Your Command Center
             </h2>
           </FadeIn>
 
           <FadeIn delay={200}>
-            <p className="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-text-muted dark:text-dark-text-muted max-w-2xl mx-auto">
               Explore the features that change everything
             </p>
           </FadeIn>
@@ -621,11 +627,11 @@ const Features = () => {
 
         {/* Keyboard hint (desktop only) */}
         <div className="hidden md:flex justify-center mt-6">
-          <span className="text-xs text-text-light flex items-center gap-2">
-            <kbd className="px-2 py-1 bg-secondary-100 rounded text-text-muted font-mono text-xs">
+          <span className="text-xs text-text-light dark:text-dark-text-muted flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-secondary-100 dark:bg-dark-surface rounded text-text-muted dark:text-dark-text-muted font-mono text-xs">
               ←
             </kbd>
-            <kbd className="px-2 py-1 bg-secondary-100 rounded text-text-muted font-mono text-xs">
+            <kbd className="px-2 py-1 bg-secondary-100 dark:bg-dark-surface rounded text-text-muted dark:text-dark-text-muted font-mono text-xs">
               →
             </kbd>
             <span>to navigate</span>
@@ -636,7 +642,7 @@ const Features = () => {
         <FadeIn delay={400}>
           <div className="mt-12 sm:mt-16 max-w-2xl mx-auto">
             <div
-              className={`bg-white rounded-2xl p-6 sm:p-8 border border-secondary-200 shadow-lg transition-all duration-500`}
+              className={`bg-white dark:bg-dark-surface rounded-2xl p-6 sm:p-8 border border-secondary-200 dark:border-dark-border shadow-lg transition-all duration-500`}
             >
               <div className="flex items-start gap-4">
                 <div
@@ -645,17 +651,17 @@ const Features = () => {
                   {React.createElement(features[currentSlide].Icon)}
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-text-primary mb-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-text-primary dark:text-dark-text mb-2">
                     {features[currentSlide].title}
                   </h3>
-                  <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
+                  <p className="text-text-secondary dark:text-dark-text-muted text-sm sm:text-base leading-relaxed">
                     {features[currentSlide].story}
                   </p>
                   <div className="mt-4 flex items-center gap-2">
                     <span className={`${features[currentSlide].accentColor}`}>
                       <Icons.Sparkles />
                     </span>
-                    <span className="text-sm font-medium text-text-secondary">
+                    <span className="text-sm font-medium text-text-secondary dark:text-dark-text-muted">
                       {features[currentSlide].benefit}
                     </span>
                   </div>
@@ -667,8 +673,8 @@ const Features = () => {
       </div>
 
       {/* Background decorative elements */}
-      <div className="absolute left-0 top-1/4 w-64 h-64 bg-primary-100/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute right-0 bottom-1/4 w-64 h-64 bg-primary-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute left-0 top-1/4 w-64 h-64 bg-primary-100/20 dark:bg-primary-800/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute right-0 bottom-1/4 w-64 h-64 bg-primary-100/20 dark:bg-primary-800/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Custom scrollbar hide styles */}
       <style>{`

@@ -103,7 +103,7 @@ const Icons = {
 // Floating particle component
 const FloatingParticle = ({ delay, duration, size, left, top }) => (
   <div
-    className="absolute rounded-full bg-gradient-to-br from-primary-200 to-accent-200 opacity-30 animate-float"
+    className="absolute rounded-full bg-gradient-to-br from-primary-200 to-accent-200 dark:from-primary-700 dark:to-accent-700 opacity-30 animate-float"
     style={{
       width: size,
       height: size,
@@ -118,15 +118,17 @@ const FloatingParticle = ({ delay, duration, size, left, top }) => (
 // Platform badge component
 const PlatformBadge = ({ Icon, name, delay, isVisible }) => (
   <div
-    className={`flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-gray-100 shadow-sm transition-all duration-700 hover:shadow-md hover:scale-105 cursor-pointer ${
+    className={`flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-dark-surface/80 backdrop-blur-sm rounded-full border border-gray-100 dark:border-dark-border shadow-sm transition-all duration-700 hover:shadow-md hover:scale-105 cursor-pointer ${
       isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
     }`}
     style={{ transitionDelay: `${delay}ms` }}
   >
-    <span className="text-gray-600">
+    <span className="text-gray-600 dark:text-dark-text-muted">
       <Icon />
     </span>
-    <span className="text-sm font-medium text-gray-700">{name}</span>
+    <span className="text-sm font-medium text-gray-700 dark:text-dark-text">
+      {name}
+    </span>
   </div>
 );
 
@@ -138,10 +140,12 @@ const AnimatedStat = ({ value, label, delay, isVisible }) => (
     }`}
     style={{ transitionDelay: `${delay}ms` }}
   >
-    <div className="text-2xl sm:text-3xl font-bold text-primary-600">
+    <div className="text-2xl sm:text-3xl font-bold text-primary-600 dark:text-primary-400">
       {value}
     </div>
-    <div className="text-xs sm:text-sm text-text-light">{label}</div>
+    <div className="text-xs sm:text-sm text-text-light dark:text-dark-text-muted">
+      {label}
+    </div>
   </div>
 );
 
@@ -154,8 +158,8 @@ const ScrollIndicator = ({ isVisible }) => (
     style={{ transitionDelay: "2000ms" }}
   >
     {/* Animated mouse icon */}
-    <div className="relative w-6 h-10 border-2 border-secondary-400 rounded-full flex justify-center">
-      <div className="w-1 h-2 bg-secondary-500 rounded-full mt-2 animate-scroll-dot" />
+    <div className="relative w-6 h-10 border-2 border-secondary-400 dark:border-secondary-600 rounded-full flex justify-center">
+      <div className="w-1 h-2 bg-secondary-500 dark:bg-secondary-400 rounded-full mt-2 animate-scroll-dot" />
     </div>
 
     {/* Film reel dots */}
@@ -163,13 +167,13 @@ const ScrollIndicator = ({ isVisible }) => (
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
-          className="w-1 h-2 bg-secondary-400 rounded-full animate-pulse"
+          className="w-1 h-2 bg-secondary-400 dark:bg-secondary-600 rounded-full animate-pulse"
           style={{ animationDelay: `${i * 0.15}s` }}
         />
       ))}
     </div>
 
-    <span className="text-text-light text-[10px] sm:text-xs tracking-[0.2em] uppercase">
+    <span className="text-text-light dark:text-dark-text-muted text-[10px] sm:text-xs tracking-[0.2em] uppercase">
       Scroll to Begin
     </span>
   </div>
@@ -178,7 +182,7 @@ const ScrollIndicator = ({ isVisible }) => (
 // Primary CTA button
 const PrimaryButton = ({ children, isVisible }) => (
   <button
-    className={`group relative px-8 sm:px-10 py-4 sm:py-5 bg-primary-600 text-white rounded-full text-base sm:text-lg font-medium overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/25 active:scale-95 ${
+    className={`group relative px-8 sm:px-10 py-4 sm:py-5 bg-primary-600 dark:bg-primary-500 text-white rounded-full text-base sm:text-lg font-medium overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/25 active:scale-95 ${
       isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
     }`}
     style={{ transitionDelay: "1800ms" }}
@@ -187,20 +191,20 @@ const PrimaryButton = ({ children, isVisible }) => (
       <span className="w-3 h-3 border-2 border-white rounded-full group-hover:bg-white transition-colors duration-300" />
       {children}
     </span>
-    <div className="absolute inset-0 bg-primary-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <div className="absolute inset-0 bg-primary-700 dark:bg-primary-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
   </button>
 );
 
 // Secondary CTA button
 const SecondaryButton = ({ children, isVisible }) => (
   <button
-    className={`group px-8 sm:px-10 py-4 sm:py-5 text-text-secondary rounded-full text-base sm:text-lg font-medium border-2 border-secondary-300 hover:border-primary-300 hover:bg-secondary-50 transition-all duration-500 flex items-center justify-center gap-3 active:scale-95 ${
+    className={`group px-8 sm:px-10 py-4 sm:py-5 text-text-secondary dark:text-dark-text-muted rounded-full text-base sm:text-lg font-medium border-2 border-secondary-300 dark:border-dark-border hover:border-primary-300 dark:hover:border-primary-500 hover:bg-secondary-50 dark:hover:bg-dark-surface-light transition-all duration-500 flex items-center justify-center gap-3 active:scale-95 ${
       isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
     }`}
     style={{ transitionDelay: "1900ms" }}
   >
-    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-secondary-100 to-secondary-50 flex items-center justify-center group-hover:from-primary-100 group-hover:to-primary-50 transition-all duration-300 shadow-inner">
-      <span className="ml-0.5 text-text-secondary group-hover:text-primary-600 transition-colors duration-300">
+    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-secondary-100 to-secondary-50 dark:from-dark-surface-light dark:to-dark-surface flex items-center justify-center group-hover:from-primary-100 group-hover:to-primary-50 dark:group-hover:from-primary-900/50 dark:group-hover:to-primary-800/30 transition-all duration-300 shadow-inner">
+      <span className="ml-0.5 text-text-secondary dark:text-dark-text-muted group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">
         <Icons.Play />
       </span>
     </div>
@@ -262,15 +266,15 @@ const Hero = () => {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center bg-secondary-100 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center bg-secondary-100 dark:bg-dark-bg overflow-hidden"
     >
       {/* Cinematic letterbox bars */}
 
       {/* Animated ambient lights with parallax */}
       <div className="absolute inset-0 overflow-hidden">
         <div
-          className={`absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary-300 rounded-full blur-3xl transition-opacity duration-1000 ${
-            loaded ? "opacity-40" : "opacity-0"
+          className={`absolute top-1/4 left-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary-300 dark:bg-primary-700 rounded-full blur-3xl transition-opacity duration-1000 ${
+            loaded ? "opacity-40 dark:opacity-20" : "opacity-0"
           }`}
           style={{
             transform: `translate(${mousePosition.x * 2}px, ${
@@ -280,8 +284,8 @@ const Hero = () => {
           }}
         />
         <div
-          className={`absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary-400 rounded-full blur-3xl transition-opacity duration-1000 delay-300 ${
-            loaded ? "opacity-40" : "opacity-0"
+          className={`absolute bottom-1/4 right-1/4 w-64 sm:w-96 h-64 sm:h-96 bg-primary-400 dark:bg-primary-600 rounded-full blur-3xl transition-opacity duration-1000 delay-300 ${
+            loaded ? "opacity-40 dark:opacity-20" : "opacity-0"
           }`}
           style={{
             transform: `translate(${-mousePosition.x * 2}px, ${
@@ -291,8 +295,8 @@ const Hero = () => {
           }}
         />
         <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-accent-200 rounded-full blur-3xl transition-opacity duration-1000 delay-500 ${
-            loaded ? "opacity-30" : "opacity-0"
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-accent-200 dark:bg-accent-700 rounded-full blur-3xl transition-opacity duration-1000 delay-500 ${
+            loaded ? "opacity-30 dark:opacity-15" : "opacity-0"
           }`}
         />
       </div>
@@ -306,8 +310,8 @@ const Hero = () => {
 
       {/* Grid pattern overlay */}
       <div
-        className={`absolute inset-0 opacity-[0.015] pointer-events-none transition-opacity duration-1000 ${
-          loaded ? "opacity-[0.015]" : "opacity-0"
+        className={`absolute inset-0 opacity-[0.015] dark:opacity-[0.03] pointer-events-none transition-opacity duration-1000 ${
+          loaded ? "opacity-[0.015] dark:opacity-[0.03]" : "opacity-0"
         }`}
         style={{
           backgroundImage: `linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
@@ -325,16 +329,16 @@ const Hero = () => {
           }`}
         >
           <div className="inline-flex items-center gap-3 sm:gap-4">
-            <div className="w-8 sm:w-12 h-px bg-gradient-to-r from-transparent to-gray-300" />
+            <div className="w-8 sm:w-12 h-px bg-gradient-to-r from-transparent to-gray-300 dark:to-gray-600" />
             <div className="flex items-center gap-2">
-              <span className="text-primary-500">
+              <span className="text-primary-500 dark:text-primary-400">
                 <Icons.Layers />
               </span>
-              <span className="text-text-muted text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase font-medium">
+              <span className="text-text-muted dark:text-dark-text-muted text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase font-medium">
                 OnlyCreators Presents
               </span>
             </div>
-            <div className="w-8 sm:w-12 h-px bg-gradient-to-l from-transparent to-gray-300" />
+            <div className="w-8 sm:w-12 h-px bg-gradient-to-l from-transparent to-gray-300 dark:to-gray-600" />
           </div>
         </div>
 
@@ -347,7 +351,7 @@ const Hero = () => {
                 : "translate-y-full opacity-0"
             }`}
           >
-            <span className="block text-text-primary font-light tracking-tight">
+            <span className="block text-text-primary dark:text-dark-text font-light tracking-tight">
               Every Creator
             </span>
           </h1>
@@ -364,14 +368,16 @@ const Hero = () => {
             style={{ transitionDelay: "200ms" }}
           >
             <span className="block">
-              <span className="text-text-primary font-light tracking-tight">
+              <span className="text-text-primary dark:text-dark-text font-light tracking-tight">
                 Has a{" "}
               </span>
               <span className="relative inline-block">
-                <span className="italic text-primary-600">Story</span>
+                <span className="italic text-primary-600 dark:text-primary-400">
+                  Story
+                </span>
                 {/* Decorative underline */}
                 <svg
-                  className={`absolute -bottom-2 left-0 w-full h-3 text-primary-300/50 transition-all duration-1000 ${
+                  className={`absolute -bottom-2 left-0 w-full h-3 text-primary-300/50 dark:text-primary-500/50 transition-all duration-1000 ${
                     showTitle
                       ? "opacity-100 scale-x-100"
                       : "opacity-0 scale-x-0"
@@ -401,9 +407,12 @@ const Hero = () => {
           }`}
         >
           {/* Tagline */}
-          <p className="text-lg sm:text-xl md:text-2xl text-text-muted max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-12 font-light leading-relaxed px-4">
+          <p className="text-lg sm:text-xl md:text-2xl text-text-muted dark:text-dark-text-muted max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-12 font-light leading-relaxed px-4">
             This is yours. Let us help you{" "}
-            <span className="text-text-secondary font-medium">tell it</span>.
+            <span className="text-text-secondary dark:text-dark-text font-medium">
+              tell it
+            </span>
+            .
           </p>
 
           {/* CTA Buttons */}
@@ -423,7 +432,7 @@ const Hero = () => {
             }`}
             style={{ transitionDelay: "2100ms" }}
           >
-            <p className="text-xs sm:text-sm text-text-light tracking-wider uppercase mb-4 sm:mb-6">
+            <p className="text-xs sm:text-sm text-text-light dark:text-dark-text-muted tracking-wider uppercase mb-4 sm:mb-6">
               Unify your presence across
             </p>
             <div className="flex flex-wrap justify-center gap-2 mb-4 sm:gap-4">
@@ -446,25 +455,25 @@ const Hero = () => {
 
       {/* Decorative corner elements */}
       <div
-        className={`absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-secondary-300/50 transition-all duration-1000 ${
+        className={`absolute top-8 left-8 w-16 h-16 border-l-2 border-t-2 border-secondary-300/50 dark:border-secondary-700/50 transition-all duration-1000 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         style={{ transitionDelay: "1500ms" }}
       />
       <div
-        className={`absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-secondary-300/50 transition-all duration-1000 ${
+        className={`absolute top-8 right-8 w-16 h-16 border-r-2 border-t-2 border-secondary-300/50 dark:border-secondary-700/50 transition-all duration-1000 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         style={{ transitionDelay: "1600ms" }}
       />
       <div
-        className={`absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-secondary-300/50 transition-all duration-1000 hidden sm:block ${
+        className={`absolute bottom-8 left-8 w-16 h-16 border-l-2 border-b-2 border-secondary-300/50 dark:border-secondary-700/50 transition-all duration-1000 hidden sm:block ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         style={{ transitionDelay: "1700ms" }}
       />
       <div
-        className={`absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-secondary-300/50 transition-all duration-1000 hidden sm:block ${
+        className={`absolute bottom-8 right-8 w-16 h-16 border-r-2 border-b-2 border-secondary-300/50 dark:border-secondary-700/50 transition-all duration-1000 hidden sm:block ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
         style={{ transitionDelay: "1800ms" }}

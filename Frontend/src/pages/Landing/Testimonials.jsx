@@ -297,10 +297,10 @@ const TestimonialCard = ({ testimonial, index, isInView }) => {
 
         {/* Main Card */}
         <div
-          className={`relative bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 h-full flex flex-col transition-all duration-500 ${
+          className={`relative bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-dark-border h-full flex flex-col transition-all duration-500 ${
             isHovered
-              ? "shadow-2xl shadow-gray-200/50 border-gray-200"
-              : "shadow-xl shadow-gray-100/50"
+              ? "shadow-2xl shadow-gray-200/50 dark:shadow-black/30 border-gray-200 dark:border-dark-border"
+              : "shadow-xl shadow-gray-100/50 dark:shadow-black/20"
           }`}
           style={{
             transform: "translateZ(0)",
@@ -321,7 +321,7 @@ const TestimonialCard = ({ testimonial, index, isInView }) => {
           </div>
 
           {/* Before/After Stats */}
-          <div className="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-5 mb-6 border border-gray-100 overflow-hidden">
+          <div className="relative bg-gradient-to-br from-gray-50 to-white dark:from-dark-surface-light dark:to-dark-surface rounded-2xl p-5 mb-6 border border-gray-100 dark:border-dark-border overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-5">
               <div
@@ -336,7 +336,7 @@ const TestimonialCard = ({ testimonial, index, isInView }) => {
             <div className="relative flex items-center gap-4">
               {/* Before */}
               <div className="flex-1 text-center">
-                <div className="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider mb-1 font-medium">
+                <div className="text-[10px] sm:text-xs text-gray-400 dark:text-dark-text-muted uppercase tracking-wider mb-1 font-medium">
                   Before
                 </div>
                 <div className="text-xl sm:text-2xl font-bold text-gray-400">
@@ -487,16 +487,16 @@ const Testimonials = () => {
     <section
       ref={ref}
       id="creators"
-      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 overflow-hidden relative"
+      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 dark:bg-dark-bg overflow-hidden relative"
     >
       {/* Background Decorations */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-100/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-100/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary-100/30 dark:bg-primary-800/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-100/30 dark:bg-accent-800/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Floating Elements */}
-      <div className="absolute top-20 right-10 w-20 h-20 border border-primary-200/50 rounded-full animate-float opacity-30" />
+      <div className="absolute top-20 right-10 w-20 h-20 border border-primary-200/50 dark:border-primary-700/50 rounded-full animate-float opacity-30" />
       <div
-        className="absolute bottom-40 left-10 w-16 h-16 border border-accent-200/50 rounded-full animate-float opacity-30"
+        className="absolute bottom-40 left-10 w-16 h-16 border border-accent-200/50 dark:border-accent-700/50 rounded-full animate-float opacity-30"
         style={{ animationDelay: "1s" }}
       />
 
@@ -504,22 +504,24 @@ const Testimonials = () => {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-primary-200">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-primary-200 dark:border-primary-700">
               <Icons.Users />
               <span>Chapter Five</span>
             </span>
           </FadeIn>
 
           <FadeIn delay={100}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary mb-3 sm:mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary dark:text-dark-text mb-3 sm:mb-4">
               Creators Who Changed
               <br />
-              <span className="italic text-primary-600">Their Story</span>
+              <span className="italic text-primary-600 dark:text-primary-400">
+                Their Story
+              </span>
             </h2>
           </FadeIn>
 
           <FadeIn delay={200}>
-            <p className="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-text-muted dark:text-dark-text-muted max-w-2xl mx-auto">
               Real transformations from real creators. See what's possible.
             </p>
           </FadeIn>
@@ -543,11 +545,11 @@ const Testimonials = () => {
         {/* Bottom CTA */}
         <FadeIn delay={900}>
           <div className="mt-12 sm:mt-16 text-center">
-            <p className="text-text-muted mb-6">
+            <p className="text-text-muted dark:text-dark-text-muted mb-6">
               Join thousands of creators who've transformed their content
               strategy
             </p>
-            <button className="group relative px-8 py-4 bg-primary-600 text-white rounded-full font-medium overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary-500/25">
+            <button className="group relative px-8 py-4 bg-primary-600 dark:bg-primary-500 text-white rounded-full font-medium overflow-hidden transition-all hover:shadow-2xl hover:shadow-primary-500/25">
               <span className="relative z-10 flex items-center gap-2">
                 Start Your Transformation
                 <svg

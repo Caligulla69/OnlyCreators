@@ -463,9 +463,9 @@ const ScrollProgress = () => {
   const { scrollProgress } = useStory();
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-0.5 bg-secondary-200 z-50">
+    <div className="fixed top-0 left-0 right-0 h-0.5 bg-secondary-200 dark:bg-dark-border z-50">
       <div
-        className="h-full bg-gradient-to-r from-primary-400 via-primary-500 to-accent-400 transition-all duration-150"
+        className="h-full bg-gradient-to-r from-primary-400 via-primary-500 to-accent-400 dark:from-primary-500 dark:via-primary-400 dark:to-accent-500 transition-all duration-150"
         style={{ width: `${scrollProgress}%` }}
       />
     </div>
@@ -482,14 +482,14 @@ const ChapterHeading = ({ number, title, subtitle }) => {
   return (
     <div ref={ref} className="text-center mb-16">
       <div
-        className={`inline-block px-4 py-1.5 bg-primary-50 text-primary-600 rounded-full text-sm font-medium mb-4 transition-all duration-700 ${
+        className={`inline-block px-4 py-1.5 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium mb-4 transition-all duration-700 ${
           isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >
         Chapter {number}
       </div>
       <h2
-        className={`text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-text-primary mb-4 transition-all duration-700 delay-100 ${
+        className={`text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-text-primary dark:text-dark-text mb-4 transition-all duration-700 delay-100 ${
           isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >
@@ -497,7 +497,7 @@ const ChapterHeading = ({ number, title, subtitle }) => {
       </h2>
       {subtitle && (
         <p
-          className={`text-xl text-text-muted max-w-2xl mx-auto transition-all duration-700 delay-200 ${
+          className={`text-xl text-text-muted dark:text-dark-text-muted max-w-2xl mx-auto transition-all duration-700 delay-200 ${
             isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
@@ -565,7 +565,10 @@ const Pricing = () => {
   ];
 
   return (
-    <section id="pricing" className="py-32 px-6 bg-secondary-100">
+    <section
+      id="pricing"
+      className="py-32 px-6 bg-secondary-100 dark:bg-dark-bg"
+    >
       <div className="max-w-6xl mx-auto">
         <ChapterHeading
           number="Six"
@@ -579,8 +582,8 @@ const Pricing = () => {
               <div
                 className={`relative rounded-3xl p-8 h-full flex flex-col transition-all duration-500 ${
                   plan.highlighted
-                    ? "bg-gradient-to-br from-primary-600 to-primary-700 text-white shadow-2xl scale-105"
-                    : "bg-white border border-secondary-200 hover:border-primary-200 hover:shadow-xl"
+                    ? "bg-gradient-to-br from-primary-600 to-primary-700 dark:from-primary-500 dark:to-primary-600 text-white shadow-2xl scale-105"
+                    : "bg-white dark:bg-dark-surface border border-secondary-200 dark:border-dark-border hover:border-primary-200 dark:hover:border-primary-500 hover:shadow-xl"
                 }`}
               >
                 {plan.highlighted && (
@@ -592,21 +595,27 @@ const Pricing = () => {
                 <div className="mb-6">
                   <span
                     className={`text-sm ${
-                      plan.highlighted ? "text-primary-200" : "text-text-light"
+                      plan.highlighted
+                        ? "text-primary-200"
+                        : "text-text-light dark:text-dark-text-muted"
                     }`}
                   >
                     {plan.chapter}
                   </span>
                   <h3
                     className={`text-2xl font-serif font-semibold mt-1 ${
-                      plan.highlighted ? "text-white" : "text-text-primary"
+                      plan.highlighted
+                        ? "text-white"
+                        : "text-text-primary dark:text-dark-text"
                     }`}
                   >
                     {plan.name}
                   </h3>
                   <p
                     className={`text-sm mt-2 ${
-                      plan.highlighted ? "text-primary-200" : "text-text-muted"
+                      plan.highlighted
+                        ? "text-primary-200"
+                        : "text-text-muted dark:text-dark-text-muted"
                     }`}
                   >
                     {plan.description}
@@ -616,7 +625,9 @@ const Pricing = () => {
                 <div className="mb-8">
                   <span
                     className={`text-5xl font-bold ${
-                      plan.highlighted ? "text-white" : "text-text-primary"
+                      plan.highlighted
+                        ? "text-white"
+                        : "text-text-primary dark:text-dark-text"
                     }`}
                   >
                     {plan.price}
@@ -626,7 +637,7 @@ const Pricing = () => {
                       className={
                         plan.highlighted
                           ? "text-primary-200"
-                          : "text-text-muted"
+                          : "text-text-muted dark:text-dark-text-muted"
                       }
                     >
                       {plan.period}
@@ -641,12 +652,14 @@ const Pricing = () => {
                       className={`flex items-center gap-3 ${
                         plan.highlighted
                           ? "text-primary-100"
-                          : "text-text-secondary"
+                          : "text-text-secondary dark:text-dark-text-muted"
                       }`}
                     >
                       <Icons.Check
                         className={
-                          plan.highlighted ? "text-white" : "text-primary-500"
+                          plan.highlighted
+                            ? "text-white"
+                            : "text-primary-500 dark:text-primary-400"
                         }
                       />
                       {feature}
@@ -658,7 +671,7 @@ const Pricing = () => {
                   className={`w-full py-4 rounded-2xl font-semibold transition-all ${
                     plan.highlighted
                       ? "bg-white text-primary-600 hover:bg-secondary-50"
-                      : "bg-primary-600 text-white hover:bg-primary-700"
+                      : "bg-primary-600 dark:bg-primary-500 text-white hover:bg-primary-700 dark:hover:bg-primary-600"
                   }`}
                 >
                   {plan.cta}
@@ -693,7 +706,7 @@ export default function OnlyCreatorsStorytelling() {
         }
       `}</style>
 
-      <div className="min-h-screen text-text-primary">
+      <div className="min-h-screen text-text-primary dark:text-dark-text bg-secondary-100 dark:bg-dark-bg">
         <ScrollProgress />
         <Navigation />
 
@@ -703,31 +716,31 @@ export default function OnlyCreatorsStorytelling() {
         {/* Content wrapper with proper stacking */}
         <div className="relative z-10">
           {/* All sections with guaranteed solid backgrounds */}
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Dilemma />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Problems />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <TurningPoint />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Features />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Journey />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Testimonials />
           </div>
-          <div className="bg-primary-700">
+          <div className="bg-primary-700 dark:bg-primary-900">
             <Metrics />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Pricing />
           </div>
-          <div className="bg-secondary-100">
+          <div className="bg-secondary-100 dark:bg-dark-bg">
             <FinalCTA />
           </div>
           <Footer />

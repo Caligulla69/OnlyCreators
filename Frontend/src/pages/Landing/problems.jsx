@@ -105,40 +105,40 @@ const Icons = {
 // Color configurations (avoiding dynamic Tailwind classes)
 const colorConfig = {
   purple: {
-    bg: "bg-primary-50",
-    bgGradientFrom: "from-primary-100",
-    bgGradientTo: "to-primary-50",
-    border: "border-primary-200",
-    borderActive: "border-primary-300",
-    text: "text-primary-600",
-    iconBg: "bg-primary-100",
-    shadow: "shadow-primary-100/50",
-    pulseRing: "bg-primary-100",
-    statBorder: "border-primary-100",
+    bg: "bg-primary-50 dark:bg-primary-900/20",
+    bgGradientFrom: "from-primary-100 dark:from-primary-800/30",
+    bgGradientTo: "to-primary-50 dark:to-primary-900/20",
+    border: "border-primary-200 dark:border-primary-700",
+    borderActive: "border-primary-300 dark:border-primary-500",
+    text: "text-primary-600 dark:text-primary-400",
+    iconBg: "bg-primary-100 dark:bg-primary-800/30",
+    shadow: "shadow-primary-100/50 dark:shadow-primary-900/30",
+    pulseRing: "bg-primary-100 dark:bg-primary-800/30",
+    statBorder: "border-primary-100 dark:border-primary-700",
   },
   blue: {
-    bg: "bg-primary-50",
-    bgGradientFrom: "from-primary-100",
-    bgGradientTo: "to-primary-50",
-    border: "border-primary-200",
-    borderActive: "border-primary-300",
-    text: "text-primary-600",
-    iconBg: "bg-primary-100",
-    shadow: "shadow-primary-100/50",
-    pulseRing: "bg-primary-100",
-    statBorder: "border-primary-100",
+    bg: "bg-primary-50 dark:bg-primary-900/20",
+    bgGradientFrom: "from-primary-100 dark:from-primary-800/30",
+    bgGradientTo: "to-primary-50 dark:to-primary-900/20",
+    border: "border-primary-200 dark:border-primary-700",
+    borderActive: "border-primary-300 dark:border-primary-500",
+    text: "text-primary-600 dark:text-primary-400",
+    iconBg: "bg-primary-100 dark:bg-primary-800/30",
+    shadow: "shadow-primary-100/50 dark:shadow-primary-900/30",
+    pulseRing: "bg-primary-100 dark:bg-primary-800/30",
+    statBorder: "border-primary-100 dark:border-primary-700",
   },
   rose: {
-    bg: "bg-accent-50",
-    bgGradientFrom: "from-accent-100",
-    bgGradientTo: "to-accent-50",
-    border: "border-accent-200",
-    borderActive: "border-accent-300",
-    text: "text-accent-600",
-    iconBg: "bg-accent-100",
-    shadow: "shadow-accent-100/50",
-    pulseRing: "bg-accent-100",
-    statBorder: "border-accent-100",
+    bg: "bg-accent-50 dark:bg-accent-900/20",
+    bgGradientFrom: "from-accent-100 dark:from-accent-800/30",
+    bgGradientTo: "to-accent-50 dark:to-accent-900/20",
+    border: "border-accent-200 dark:border-accent-700",
+    borderActive: "border-accent-300 dark:border-accent-500",
+    text: "text-accent-600 dark:text-accent-400",
+    iconBg: "bg-accent-100 dark:bg-accent-800/30",
+    shadow: "shadow-accent-100/50 dark:shadow-accent-900/30",
+    pulseRing: "bg-accent-100 dark:bg-accent-800/30",
+    statBorder: "border-accent-100 dark:border-accent-700",
   },
 };
 
@@ -242,10 +242,10 @@ const ProblemCard = ({
 
       {/* Main Card */}
       <div
-        className={`relative bg-white rounded-3xl p-6 sm:p-8 border-2 transition-all duration-500 h-full flex flex-col ${
+        className={`relative bg-white dark:bg-dark-surface rounded-3xl p-6 sm:p-8 border-2 transition-all duration-500 h-full flex flex-col ${
           isActive
             ? `${colors.borderActive} shadow-xl ${colors.shadow}`
-            : "border-secondary-200 shadow-lg hover:shadow-xl"
+            : "border-secondary-200 dark:border-dark-border shadow-lg hover:shadow-xl"
         }`}
       >
         {/* Icon Container */}
@@ -264,12 +264,12 @@ const ProblemCard = ({
         </div>
 
         {/* Title */}
-        <h3 className="text-lg sm:text-xl font-bold text-text-primary mb-3 sm:mb-4">
+        <h3 className="text-lg sm:text-xl font-bold text-text-primary dark:text-dark-text mb-3 sm:mb-4">
           "{title}"
         </h3>
 
         {/* Description */}
-        <p className="text-text-muted leading-relaxed text-sm sm:text-base flex-grow">
+        <p className="text-text-muted dark:text-dark-text-muted leading-relaxed text-sm sm:text-base flex-grow">
           {description}
         </p>
 
@@ -283,7 +283,9 @@ const ProblemCard = ({
             <div className={`text-3xl sm:text-4xl font-bold ${colors.text}`}>
               {stat}
             </div>
-            <div className="text-sm text-text-light mt-1">{statLabel}</div>
+            <div className="text-sm text-text-light dark:text-dark-text-muted mt-1">
+              {statLabel}
+            </div>
           </div>
         </div>
 
@@ -300,7 +302,7 @@ const ProblemCard = ({
             fill="none"
             stroke="currentColor"
             strokeWidth="1.5"
-            className="text-secondary-400"
+            className="text-secondary-400 dark:text-secondary-600"
           >
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="16" x2="12" y2="12" />
@@ -341,28 +343,30 @@ const Problems = () => {
     <section
       ref={ref}
       id="problems"
-      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 overflow-hidden"
+      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 dark:bg-dark-bg overflow-hidden"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12 sm:mb-16 md:mb-20">
           <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-50 text-accent-600 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-accent-100">
-              <span className="w-1.5 h-1.5 bg-accent-500 rounded-full animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-50 dark:bg-accent-900/20 text-accent-600 dark:text-accent-400 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-accent-100 dark:border-accent-700">
+              <span className="w-1.5 h-1.5 bg-accent-500 dark:bg-accent-400 rounded-full animate-pulse" />
               Chapter Two
             </span>
           </FadeIn>
 
           <FadeIn delay={100}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary mb-4 sm:mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary dark:text-dark-text mb-4 sm:mb-6 leading-tight">
               Three Platforms,
               <br />
-              <span className="italic text-text-light">Endless Questions</span>
+              <span className="italic text-text-light dark:text-dark-text-muted">
+                Endless Questions
+              </span>
             </h2>
           </FadeIn>
 
           <FadeIn delay={200}>
-            <p className="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto">
+            <p className="text-lg sm:text-xl text-text-muted dark:text-dark-text-muted max-w-2xl mx-auto">
               Sound familiar? You're not alone.
             </p>
           </FadeIn>
@@ -386,7 +390,7 @@ const Problems = () => {
         {/* Bottom CTA hint */}
         <FadeIn delay={700}>
           <div className="mt-12 sm:mt-16 md:mt-20 text-center">
-            <div className="inline-flex items-center gap-2 text-text-light text-sm">
+            <div className="inline-flex items-center gap-2 text-text-light dark:text-dark-text-muted text-sm">
               <span>But what if there was a better way?</span>
               <svg
                 width="20"
@@ -405,8 +409,8 @@ const Problems = () => {
       </div>
 
       {/* Background decorative elements */}
-      <div className="absolute left-0 top-1/4 w-64 h-64 bg-primary-100/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute right-0 bottom-1/4 w-64 h-64 bg-primary-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute left-0 top-1/4 w-64 h-64 bg-primary-100/20 dark:bg-primary-800/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute right-0 bottom-1/4 w-64 h-64 bg-primary-100/20 dark:bg-primary-800/10 rounded-full blur-3xl pointer-events-none" />
     </section>
   );
 };

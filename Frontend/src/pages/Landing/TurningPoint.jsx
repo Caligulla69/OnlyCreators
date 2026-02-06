@@ -174,7 +174,7 @@ const PlatformButton = ({ Icon, isActive, delay, isVisible, color }) => (
     className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all duration-500 cursor-pointer ${
       isActive
         ? `${color} text-white shadow-lg`
-        : "bg-white text-text-muted hover:text-text-secondary border border-secondary-200 hover:border-secondary-300 hover:shadow-md"
+        : "bg-white dark:bg-dark-surface text-text-muted dark:text-dark-text-muted hover:text-text-secondary dark:hover:text-dark-text border border-secondary-200 dark:border-dark-border hover:border-secondary-300 dark:hover:border-dark-border hover:shadow-md"
     } ${
       isVisible
         ? "opacity-100 translate-y-0 scale-100"
@@ -192,7 +192,7 @@ const StatCard = ({ stat, index, isInView }) => {
 
   return (
     <div
-      className={`group relative bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 transition-all duration-700 hover:shadow-xl hover:-translate-y-1 cursor-pointer ${
+      className={`group relative bg-white dark:bg-dark-surface rounded-2xl p-4 sm:p-5 border border-gray-100 dark:border-dark-border transition-all duration-700 hover:shadow-xl hover:-translate-y-1 cursor-pointer ${
         isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
       }`}
       style={{ transitionDelay: `${400 + index * 100}ms` }}
@@ -220,7 +220,7 @@ const StatCard = ({ stat, index, isInView }) => {
         </div>
 
         {/* Label */}
-        <div className="text-xs sm:text-sm text-gray-400 mt-1">
+        <div className="text-xs sm:text-sm text-gray-400 dark:text-dark-text-muted mt-1">
           {stat.label}
         </div>
       </div>
@@ -231,9 +231,9 @@ const StatCard = ({ stat, index, isInView }) => {
 // Dashboard Content Component
 const DashboardContent = ({ isInView }) => {
   return (
-    <div className="h-full flex flex-col bg-gradient-to-br from-secondary-50/80 via-white to-primary-50/30">
+    <div className="h-full flex flex-col bg-gradient-to-br from-secondary-50/80 via-white to-primary-50/30 dark:from-dark-surface/80 dark:via-dark-surface dark:to-dark-surface-light/30">
       {/* Header */}
-      <div className="px-5 sm:px-8 py-4 sm:py-5 border-b border-gray-100/80 bg-white/60 backdrop-blur-sm">
+      <div className="px-5 sm:px-8 py-4 sm:py-5 border-b border-gray-100/80 dark:border-dark-border/80 bg-white/60 dark:bg-dark-surface/60 backdrop-blur-sm">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* Platform toggles */}
           <div className="flex items-center gap-2 sm:gap-3">
@@ -517,26 +517,26 @@ const TurningPoint = () => {
     <section
       ref={ref}
       id="turning-point"
-      className="relative py-20 sm:py-28 md:py-36 px-4 sm:px-6 bg-secondary-100 overflow-hidden"
+      className="relative py-20 sm:py-28 md:py-36 px-4 sm:px-6 bg-secondary-100 dark:bg-dark-bg overflow-hidden"
     >
       {/* Enhanced Background */}
       <div className="absolute inset-0">
         {/* Radial gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-100/50 via-white to-white" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary-100/50 via-white to-white dark:from-primary-900/20 dark:via-dark-bg dark:to-dark-bg" />
 
         {/* Animated gradient orbs */}
         <div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-200/30 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-200/30 dark:bg-primary-800/20 rounded-full blur-3xl"
           style={{ animation: "pulse 4s ease-in-out infinite" }}
         />
         <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-200/30 rounded-full blur-3xl"
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-200/30 dark:bg-accent-800/20 rounded-full blur-3xl"
           style={{
             animation: "pulse 4s ease-in-out infinite",
             animationDelay: "2s",
           }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary-100/20 via-accent-100/20 to-secondary-100/20 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-primary-100/20 via-accent-100/20 to-secondary-100/20 dark:from-primary-800/10 dark:via-accent-800/10 dark:to-dark-bg/10 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-6xl mx-auto z-10">
@@ -545,17 +545,17 @@ const TurningPoint = () => {
           {/* Chapter Badge */}
           <div className="overflow-hidden mb-6">
             <div
-              className={`inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-100 via-secondary-50 to-primary-100 rounded-full border border-primary-200/50 transition-all duration-700 ${
+              className={`inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-100 via-secondary-50 to-primary-100 dark:from-primary-900/30 dark:via-dark-surface dark:to-primary-900/30 rounded-full border border-primary-200/50 dark:border-primary-700/50 transition-all duration-700 ${
                 isInView
                   ? "translate-y-0 opacity-100"
                   : "translate-y-full opacity-0"
               }`}
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-600" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-500 dark:bg-primary-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-600 dark:bg-primary-500" />
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-primary-600 tracking-wide">
+              <span className="text-xs sm:text-sm font-semibold text-primary-600 dark:text-primary-400 tracking-wide">
                 The Turning Point
               </span>
             </div>
@@ -564,7 +564,7 @@ const TurningPoint = () => {
           {/* "See" text */}
           <div className="overflow-hidden">
             <h2
-              className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-text-primary leading-none mb-2 sm:mb-4 transition-transform duration-1000 ${
+              className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-text-primary dark:text-dark-text leading-none mb-2 sm:mb-4 transition-transform duration-1000 ${
                 isInView ? "translate-y-0" : "translate-y-full"
               }`}
               style={{ transitionDelay: "150ms" }}
