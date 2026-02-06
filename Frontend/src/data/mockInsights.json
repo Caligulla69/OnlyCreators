@@ -1,0 +1,98 @@
+[
+  {
+    "id": "insight_1",
+    "category": "Performance",
+    "priority": "High",
+    "icon": "TrendingUp",
+    "title": "Optimal Upload Time Detected",
+    "message": "Your videos posted on Tuesday and Thursday at 2 PM get 35% more engagement than other times. Consider scheduling your next upload then.",
+    "actionable": true,
+    "actions": ["Schedule Next Video", "View Details"],
+    "impact": "+35% engagement",
+    "createdAt": "2025-01-28T10:00:00Z"
+  },
+  {
+    "id": "insight_2",
+    "category": "Audience",
+    "priority": "Medium",
+    "icon": "Users",
+    "title": "Growing International Audience",
+    "message": "60% of your new subscribers this month are from India and UK. Consider creating content that resonates with these demographics.",
+    "actionable": true,
+    "actions": ["View Demographics", "Learn More"],
+    "impact": "+24% international growth",
+    "createdAt": "2025-01-27T14:30:00Z"
+  },
+  {
+    "id": "insight_3",
+    "category": "Trends",
+    "priority": "High",
+    "icon": "Flame",
+    "title": "Trending Topic Opportunity",
+    "message": "The topic 'AI productivity tools' is trending in your niche with 2.5M+ searches. You haven't covered this yet - high opportunity for growth!",
+    "actionable": true,
+    "actions": ["Explore Topic", "Create Content"],
+    "impact": "95% opportunity score",
+    "createdAt": "2025-01-27T09:15:00Z"
+  },
+  {
+    "id": "insight_4",
+    "category": "Optimization",
+    "priority": "High",
+    "icon": "Image",
+    "title": "Thumbnail Improvement Needed",
+    "message": "Videos with custom thumbnails featuring faces get 3x more clicks. Only 40% of your recent videos use this strategy.",
+    "actionable": true,
+    "actions": ["Update Thumbnails", "View Examples"],
+    "impact": "+200% CTR potential",
+    "createdAt": "2025-01-26T16:45:00Z"
+  },
+  {
+    "id": "insight_5",
+    "category": "Performance",
+    "priority": "Medium",
+    "icon": "Clock",
+    "title": "Ideal Video Length",
+    "message": "Your best-performing videos are between 8-12 minutes long. Videos outside this range have 25% lower watch time.",
+    "actionable": true,
+    "actions": ["View Analysis", "Dismiss"],
+    "impact": "+25% watch time",
+    "createdAt": "2025-01-26T11:20:00Z"
+  },
+  {
+    "id": "insight_6",
+    "category": "Audience",
+    "priority": "Low",
+    "icon": "Users",
+    "title": "Community Engagement",
+    "message": "Videos where you respond to comments in the first hour get 45% more engagement. Try engaging more actively after uploads.",
+    "actionable": true,
+    "actions": ["Set Reminder", "Learn More"],
+    "impact": "+45% engagement",
+    "createdAt": "2025-01-25T08:00:00Z"
+  },
+  {
+    "id": "insight_7",
+    "category": "Optimization",
+    "priority": "Medium",
+    "icon": "TrendingUp",
+    "title": "SEO Improvement",
+    "message": "Adding timestamps to your descriptions could increase search visibility by 30%. Only 3 of your last 10 videos have them.",
+    "actionable": true,
+    "actions": ["Update Videos", "View Guide"],
+    "impact": "+30% search visibility",
+    "createdAt": "2025-01-24T13:30:00Z"
+  },
+  {
+    "id": "insight_8",
+    "category": "Trends",
+    "priority": "Medium",
+    "icon": "Flame",
+    "title": "Content Format Suggestion",
+    "message": "Tutorial-style content in your niche gets 50% more shares than other formats. Consider creating more step-by-step guides.",
+    "actionable": true,
+    "actions": ["View Examples", "Create Tutorial"],
+    "impact": "+50% shares",
+    "createdAt": "2025-01-23T17:00:00Z"
+  }
+]

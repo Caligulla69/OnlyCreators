@@ -1,0 +1,153 @@
+[
+  {
+    "id": "trend_1",
+    "topic": "AI Tools for Content Creators",
+    "category": "Technology",
+    "strength": "High",
+    "hashtags": ["#AI", "#ContentCreation", "#Productivity", "#AITools"],
+    "growthData": [10, 15, 25, 40, 60, 85, 100],
+    "opportunityScore": 95,
+    "searchVolume": "2.5M+",
+    "relatedVideos": [
+      { "title": "Best AI Video Editors 2025", "views": "450K" },
+      { "title": "AI Thumbnail Generators Review", "views": "320K" },
+      { "title": "ChatGPT for YouTubers", "views": "890K" }
+    ],
+    "description": "AI-powered tools are revolutionizing content creation. From automated editing to thumbnail generation, creators are leveraging AI to boost productivity.",
+    "covered": false
+  },
+  {
+    "id": "trend_2",
+    "topic": "Web Development in 2025",
+    "category": "Technology",
+    "strength": "High",
+    "hashtags": ["#WebDev", "#JavaScript", "#React", "#NextJS"],
+    "growthData": [20, 28, 35, 48, 62, 78, 92],
+    "opportunityScore": 88,
+    "searchVolume": "1.8M+",
+    "relatedVideos": [
+      { "title": "Next.js 15 New Features", "views": "520K" },
+      { "title": "React Server Components Explained", "views": "380K" },
+      { "title": "Full Stack Development Roadmap", "views": "670K" }
+    ],
+    "description": "The web development landscape continues to evolve with new frameworks and tools emerging. React and Next.js remain dominant players.",
+    "covered": true
+  },
+  {
+    "id": "trend_3",
+    "topic": "Remote Work Productivity",
+    "category": "Lifestyle",
+    "strength": "Medium",
+    "hashtags": [
+      "#RemoteWork",
+      "#Productivity",
+      "#WorkFromHome",
+      "#DigitalNomad"
+    ],
+    "growthData": [15, 20, 25, 32, 38, 45, 52],
+    "opportunityScore": 72,
+    "searchVolume": "980K+",
+    "relatedVideos": [
+      { "title": "My Remote Work Setup 2025", "views": "290K" },
+      { "title": "Best Tools for Remote Teams", "views": "180K" },
+      { "title": "Work-Life Balance Tips", "views": "340K" }
+    ],
+    "description": "Remote work continues to be a major trend with more companies offering flexible arrangements. Content around productivity tools is in high demand.",
+    "covered": false
+  },
+  {
+    "id": "trend_4",
+    "topic": "Cybersecurity Basics",
+    "category": "Technology",
+    "strength": "Medium",
+    "hashtags": ["#Cybersecurity", "#Security", "#Privacy", "#Hacking"],
+    "growthData": [12, 18, 24, 35, 42, 55, 68],
+    "opportunityScore": 78,
+    "searchVolume": "1.2M+",
+    "relatedVideos": [
+      { "title": "How to Secure Your Online Accounts", "views": "420K" },
+      { "title": "VPN Comparison 2025", "views": "560K" },
+      { "title": "Password Manager Setup Guide", "views": "280K" }
+    ],
+    "description": "With increasing cyber threats, there's growing demand for educational content about online security and privacy protection.",
+    "covered": false
+  },
+  {
+    "id": "trend_5",
+    "topic": "No-Code Development",
+    "category": "Technology",
+    "strength": "High",
+    "hashtags": ["#NoCode", "#LowCode", "#Automation", "#BuildInPublic"],
+    "growthData": [8, 15, 28, 45, 65, 82, 98],
+    "opportunityScore": 91,
+    "searchVolume": "890K+",
+    "relatedVideos": [
+      { "title": "Build Apps Without Coding", "views": "720K" },
+      { "title": "Best No-Code Platforms 2025", "views": "450K" },
+      { "title": "Bubble.io Complete Tutorial", "views": "380K" }
+    ],
+    "description": "No-code platforms are democratizing software development. More people are building apps and automations without traditional programming skills.",
+    "covered": true
+  },
+  {
+    "id": "trend_6",
+    "topic": "YouTube Shorts Strategy",
+    "category": "Content Creation",
+    "strength": "High",
+    "hashtags": [
+      "#YouTubeShorts",
+      "#ShortForm",
+      "#ViralContent",
+      "#ContentStrategy"
+    ],
+    "growthData": [25, 35, 48, 62, 78, 88, 100],
+    "opportunityScore": 94,
+    "searchVolume": "1.5M+",
+    "relatedVideos": [
+      { "title": "How to Go Viral on Shorts", "views": "1.2M" },
+      { "title": "Shorts Monetization Explained", "views": "890K" },
+      { "title": "Shorts vs Long Form Content", "views": "650K" }
+    ],
+    "description": "YouTube Shorts continue to grow, offering creators new opportunities for audience reach and monetization.",
+    "covered": false
+  },
+  {
+    "id": "trend_7",
+    "topic": "Sustainable Tech",
+    "category": "Technology",
+    "strength": "Medium",
+    "hashtags": [
+      "#GreenTech",
+      "#Sustainability",
+      "#EcoFriendly",
+      "#CleanEnergy"
+    ],
+    "growthData": [10, 15, 22, 30, 38, 48, 58],
+    "opportunityScore": 65,
+    "searchVolume": "650K+",
+    "relatedVideos": [
+      { "title": "Eco-Friendly Gadgets 2025", "views": "180K" },
+      { "title": "Solar Tech for Home", "views": "290K" },
+      { "title": "Electric Vehicle Tech Explained", "views": "420K" }
+    ],
+    "description": "Growing interest in sustainable technology and eco-friendly solutions in the tech industry.",
+    "covered": false
+  },
+  {
+    "id": "trend_8",
+    "topic": "Machine Learning Basics",
+    "category": "Technology",
+    "strength": "High",
+    "hashtags": ["#MachineLearning", "#ML", "#DataScience", "#Python"],
+    "growthData": [18, 25, 38, 52, 68, 80, 95],
+    "opportunityScore": 86,
+    "searchVolume": "2.1M+",
+    "relatedVideos": [
+      { "title": "ML for Beginners", "views": "980K" },
+      { "title": "Python ML Libraries Guide", "views": "720K" },
+      { "title": "Build Your First ML Model", "views": "560K" }
+    ],
+    "description": "Machine learning education content is in high demand as more developers seek to add AI skills to their toolkit.",
+    "covered": true
+  }
+]
