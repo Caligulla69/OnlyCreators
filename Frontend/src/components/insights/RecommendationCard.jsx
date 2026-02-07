@@ -45,9 +45,12 @@ const recommendations = [
 ];
 
 const statusColors = {
-  success: "bg-success-100 text-success-700 border-success-200",
-  warning: "bg-warning-100 text-warning-700 border-warning-200",
-  error: "bg-error-100 text-error-700 border-error-200",
+  success:
+    "bg-success-100 text-success-700 border-success-200 dark:bg-success-900/30 dark:text-success-400 dark:border-success-800",
+  warning:
+    "bg-warning-100 text-warning-700 border-warning-200 dark:bg-warning-900/30 dark:text-warning-400 dark:border-warning-800",
+  error:
+    "bg-error-100 text-error-700 border-error-200 dark:bg-error-900/30 dark:text-error-400 dark:border-error-800",
 };
 
 const statusIcons = {
@@ -66,7 +69,7 @@ const RecommendationCard = () => {
         {recommendations.map((rec) => (
           <div
             key={rec.id}
-            className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+            className="flex items-start gap-4 p-4 bg-surface-100 dark:bg-dark-surface-light rounded-xl hover:bg-surface-200 dark:hover:bg-dark-border transition-colors"
           >
             {/* Status Icon */}
             <div
@@ -78,23 +81,27 @@ const RecommendationCard = () => {
             {/* Content */}
             <div className="flex-1">
               <div className="flex items-center justify-between mb-1">
-                <h4 className="font-semibold text-gray-900">{rec.category}</h4>
-                <span className="text-sm font-medium text-success-600">
+                <h4 className="font-semibold text-text-primary dark:text-dark-text">
+                  {rec.category}
+                </h4>
+                <span className="text-sm font-medium text-success-600 dark:text-success-400">
                   {rec.impact}
                 </span>
               </div>
-              <p className="text-sm text-gray-500 mb-1">
+              <p className="text-sm text-text-muted dark:text-dark-text-muted mb-1">
                 Current: {rec.current}
               </p>
-              <p className="text-sm text-gray-700">💡 {rec.recommendation}</p>
+              <p className="text-sm text-text-secondary dark:text-dark-text">
+                💡 {rec.recommendation}
+              </p>
             </div>
           </div>
         ))}
       </div>
 
       {/* Tags Suggestions */}
-      <div className="mt-6 pt-6 border-t border-gray-200">
-        <h4 className="font-semibold text-gray-900 mb-3">
+      <div className="mt-6 pt-6 border-t border-surface-300 dark:border-dark-border">
+        <h4 className="font-semibold text-text-primary dark:text-dark-text mb-3">
           Suggested Tags for Your Niche
         </h4>
         <div className="flex flex-wrap gap-2">
@@ -116,7 +123,7 @@ const RecommendationCard = () => {
           ].map((tag, index) => (
             <button
               key={index}
-              className="px-3 py-1.5 bg-primary-50 text-primary-700 text-sm rounded-full hover:bg-primary-100 transition-colors"
+              className="px-3 py-1.5 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400 text-sm rounded-full hover:bg-primary-100 dark:hover:bg-primary-900/30 border border-primary-200 dark:border-primary-700/40 transition-colors"
             >
               {tag}
             </button>

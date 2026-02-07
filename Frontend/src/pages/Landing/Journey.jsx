@@ -1,180 +1,243 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  memo,
+  useCallback,
+  useMemo,
+} from "react";
 
 // ============================================
-// JOURNEY SECTION - Chapter Four
-// 30-Day Timeline with Interactive Calendar
-// Professional, Optimized, Responsive
+// JOURNEY SECTION — Chapter Four
+// 30-Day Interactive Timeline
+// Warm Accent Palette | Theme-Integrated
 // ============================================
 
-// Professional SVG Icons
-const Icons = {
-  Plug: () => (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22v-5" />
-      <path d="M9 8V2" />
-      <path d="M15 8V2" />
-      <path d="M18 8v5a6 6 0 0 1-6 6v0a6 6 0 0 1-6-6V8h12Z" />
-    </svg>
-  ),
-  Sparkles: () => (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707" />
-      <circle cx="12" cy="12" r="4" />
-    </svg>
-  ),
-  Lightbulb: () => (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M9 18h6" />
-      <path d="M10 22h4" />
-      <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z" />
-    </svg>
-  ),
-  Rocket: () => (
-    <svg
-      width="28"
-      height="28"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-      <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-    </svg>
-  ),
-  Check: () => (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  ),
-  Calendar: () => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  ),
-  Clock: () => (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  ),
-  ArrowRight: () => (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  ),
-  ChevronLeft: () => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="15 18 9 12 15 6" />
-    </svg>
-  ),
-  ChevronRight: () => (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="9 18 15 12 9 6" />
-    </svg>
-  ),
+// ── Hooks ──────────────────────────────────────────────
+
+const useInView = (threshold = 0.12) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || visible) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold, rootMargin: "40px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold, visible]);
+  return [ref, visible];
 };
 
-// Milestone data with professional icons
-const milestones = {
+// ── Icons ──────────────────────────────────────────────
+
+const PlugIcon = memo(() => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 22v-5" />
+    <path d="M9 8V2" />
+    <path d="M15 8V2" />
+    <path d="M18 8v5a6 6 0 0 1-6 6v0a6 6 0 0 1-6-6V8h12Z" />
+  </svg>
+));
+PlugIcon.displayName = "PlugIcon";
+
+const SparklesIcon = memo(() => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z" />
+  </svg>
+));
+SparklesIcon.displayName = "SparklesIcon";
+
+const LightbulbIcon = memo(() => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M9 18h6" />
+    <path d="M10 22h4" />
+    <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z" />
+  </svg>
+));
+LightbulbIcon.displayName = "LightbulbIcon";
+
+const RocketIcon = memo(() => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+    <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+  </svg>
+));
+RocketIcon.displayName = "RocketIcon";
+
+const CheckIcon = memo(() => (
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M20 6L9 17l-5-5" />
+  </svg>
+));
+CheckIcon.displayName = "CheckIcon";
+
+const CalendarIcon = memo(() => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+    <line x1="16" y1="2" x2="16" y2="6" />
+    <line x1="8" y1="2" x2="8" y2="6" />
+    <line x1="3" y1="10" x2="21" y2="10" />
+  </svg>
+));
+CalendarIcon.displayName = "CalendarIcon";
+
+const ClockIcon = memo(() => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="10" />
+    <polyline points="12 6 12 12 16 14" />
+  </svg>
+));
+ClockIcon.displayName = "ClockIcon";
+
+const ArrowRightIcon = memo(() => (
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+));
+ArrowRightIcon.displayName = "ArrowRightIcon";
+
+const ChevronLeftIcon = memo(() => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <polyline points="15 18 9 12 15 6" />
+  </svg>
+));
+ChevronLeftIcon.displayName = "ChevronLeftIcon";
+
+const ChevronRightIcon = memo(() => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+));
+ChevronRightIcon.displayName = "ChevronRightIcon";
+
+// ── Milestone Data ─────────────────────────────────────
+
+const MILESTONES = Object.freeze({
   1: {
     title: "Connect & Discover",
     description:
       "Link your platforms in under a minute. We securely connect to YouTube, Instagram, and TikTok to start gathering your data.",
-    Icon: Icons.Plug,
-    color: "primary",
-    gradient: "from-primary-500 to-primary-400",
-    bgGradient: "from-primary-50 to-primary-100",
-    iconBg: "bg-gradient-to-br from-primary-500 to-primary-400",
+    Icon: PlugIcon,
+    accent: "var(--color-primary-500)",
+    accentLight: "var(--color-primary-50)",
+    accentBorder: "var(--color-primary-200)",
+    accentDark: "var(--color-primary-600)",
+    gradient:
+      "linear-gradient(135deg, var(--color-primary-500), var(--color-primary-400))",
     events: [
       { text: "Platform connected", time: "Instant" },
       { text: "Initial sync complete", time: "~30 sec" },
@@ -185,11 +248,13 @@ const milestones = {
     title: "AI Works Its Magic",
     description:
       "Our AI analyzes your content history, audience patterns, and engagement metrics to build your creator profile.",
-    Icon: Icons.Sparkles,
-    color: "primary",
-    gradient: "from-primary-600 to-primary-500",
-    bgGradient: "from-primary-50 to-primary-100",
-    iconBg: "bg-gradient-to-br from-primary-600 to-primary-500",
+    Icon: SparklesIcon,
+    accent: "var(--color-accent-500)",
+    accentLight: "var(--color-accent-50)",
+    accentBorder: "var(--color-accent-200)",
+    accentDark: "var(--color-accent-600)",
+    gradient:
+      "linear-gradient(135deg, var(--color-accent-500), var(--color-accent-400))",
     events: [
       { text: "AI analysis started", time: "Automatic" },
       { text: "Content indexed", time: "~2 hours" },
@@ -200,11 +265,13 @@ const milestones = {
     title: "Your First Insights",
     description:
       "Receive personalized recommendations based on your unique data. Actionable insights delivered to your dashboard.",
-    Icon: Icons.Lightbulb,
-    color: "accent",
-    gradient: "from-accent-500 to-accent-600",
-    bgGradient: "from-accent-50 to-accent-100",
-    iconBg: "bg-gradient-to-br from-accent-500 to-accent-600",
+    Icon: LightbulbIcon,
+    accent: "var(--color-warning-500)",
+    accentLight: "var(--color-warning-50)",
+    accentBorder: "var(--color-warning-200)",
+    accentDark: "var(--color-warning-600)",
+    gradient:
+      "linear-gradient(135deg, var(--color-warning-500), var(--color-warning-400))",
     events: [
       { text: "First report ready", time: "Day 7" },
       { text: "Recommendations sent", time: "Email + Dashboard" },
@@ -215,512 +282,808 @@ const milestones = {
     title: "Watch Your Growth",
     description:
       "Track improvements and celebrate your wins. See the transformation with before/after comparisons.",
-    Icon: Icons.Rocket,
-    color: "success",
-    gradient: "from-success-500 to-success-600",
-    bgGradient: "from-success-50 to-success-100",
-    iconBg: "bg-gradient-to-br from-success-500 to-success-600",
+    Icon: RocketIcon,
+    accent: "var(--color-success-500)",
+    accentLight: "var(--color-success-50)",
+    accentBorder: "var(--color-success-200)",
+    accentDark: "var(--color-success-600)",
+    gradient:
+      "linear-gradient(135deg, var(--color-success-500), var(--color-success-400))",
     events: [
       { text: "Growth report generated", time: "Monthly" },
       { text: "Milestones achieved", time: "Tracked" },
       { text: "Next goals set", time: "AI-suggested" },
     ],
   },
-};
+});
 
-// FadeIn animation component
-const FadeIn = ({ children, delay = 0, className = "" }) => {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+const HIGHLIGHTED_DAYS = Object.freeze([1, 2, 7, 30]);
+const DAYS = Object.freeze(Array.from({ length: 30 }, (_, i) => i + 1));
+const WEEKDAYS = Object.freeze(["S", "M", "T", "W", "T", "F", "S"]);
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
+// ── Background ─────────────────────────────────────────
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setIsVisible(true), delay);
-          observer.disconnect();
+const SectionBackground = memo(() => (
+  <div
+    className="absolute inset-0 overflow-hidden pointer-events-none"
+    aria-hidden="true"
+  >
+    <div
+      className="absolute rounded-full"
+      style={{
+        width: "clamp(300px, 40vw, 550px)",
+        height: "clamp(300px, 40vw, 550px)",
+        top: "-5%",
+        left: "5%",
+        background: "var(--color-accent-100)",
+        filter: "blur(130px)",
+        opacity: 0.12,
+      }}
+    />
+    <div
+      className="absolute rounded-full"
+      style={{
+        width: "clamp(250px, 35vw, 450px)",
+        height: "clamp(250px, 35vw, 450px)",
+        bottom: "0%",
+        right: "5%",
+        background: "var(--color-warning-100)",
+        filter: "blur(130px)",
+        opacity: 0.08,
+      }}
+    />
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundImage:
+          "radial-gradient(circle, var(--color-secondary-400) 0.5px, transparent 0.5px)",
+        backgroundSize: "40px 40px",
+        opacity: 0.06,
+      }}
+    />
+  </div>
+));
+SectionBackground.displayName = "SectionBackground";
+
+// ── Section Header ─────────────────────────────────────
+
+const SectionHeader = memo(({ isVisible }) => (
+  <div className="text-center mb-12 sm:mb-16 md:mb-20">
+    <div
+      className="transition-all duration-600"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(10px)",
+      }}
+    >
+      <span
+        className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full mb-6 sm:mb-8 text-xs sm:text-sm font-semibold"
+        style={{
+          background: "var(--color-accent-50)",
+          color: "var(--color-accent-700)",
+          border: "1px solid var(--color-accent-200)",
+        }}
+      >
+        <span className="relative flex h-2 w-2">
+          <span
+            className="absolute inline-flex h-full w-full rounded-full opacity-75"
+            style={{
+              background: "var(--color-accent-400)",
+              animation: "ping 2s cubic-bezier(0,0,0.2,1) infinite",
+            }}
+          />
+          <span
+            className="relative inline-flex rounded-full h-2 w-2"
+            style={{ background: "var(--color-accent-500)" }}
+          />
+        </span>
+        Chapter Four
+      </span>
+    </div>
+
+    <h2
+      className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-5 transition-all duration-700"
+      style={{
+        color: "var(--color-text-primary)",
+        fontFamily: "var(--font-sans)",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(14px)",
+        transitionDelay: "100ms",
+      }}
+    >
+      Your 30-Day{" "}
+      <span
+        style={{
+          background:
+            "linear-gradient(135deg, var(--color-accent-500), var(--color-error-400))",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+        }}
+      >
+        Transformation
+      </span>
+    </h2>
+
+    <p
+      className="text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed transition-all duration-700"
+      style={{
+        color: "var(--color-text-muted)",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(12px)",
+        transitionDelay: "200ms",
+      }}
+    >
+      From setup to success — see exactly what happens at each milestone
+    </p>
+  </div>
+));
+SectionHeader.displayName = "SectionHeader";
+
+// ── Calendar Day ───────────────────────────────────────
+
+const CalendarDay = memo(
+  ({ day, isMilestone, isSelected, milestone, onClick, isVisible, delay }) => {
+    const accent = milestone?.accent || "var(--color-primary-500)";
+    const accentLight = milestone?.accentLight || "var(--color-primary-50)";
+
+    return (
+      <button
+        onClick={onClick}
+        disabled={!isMilestone}
+        aria-label={
+          isMilestone ? `Day ${day} — ${milestone?.title}` : `Day ${day}`
         }
-      },
-      { threshold: 0.1 },
-    );
+        className="relative aspect-square rounded-xl flex items-center justify-center text-xs sm:text-sm font-medium transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+        style={{
+          background: isSelected
+            ? milestone?.gradient ||
+              "linear-gradient(135deg, var(--color-accent-500), var(--color-error-400))"
+            : isMilestone
+              ? accentLight
+              : "var(--color-surface-50)",
+          color: isSelected
+            ? "#fff"
+            : isMilestone
+              ? accent
+              : "var(--color-text-light)",
+          cursor: isMilestone ? "pointer" : "default",
+          transform: isVisible
+            ? isSelected
+              ? "scale(1.12)"
+              : "scale(1)"
+            : "scale(0.85) translateY(4px)",
+          opacity: isVisible ? 1 : 0,
+          transitionDelay: `${delay}ms`,
+          boxShadow: isSelected
+            ? `0 8px 24px -4px color-mix(in srgb, ${accent} 40%, transparent)`
+            : "none",
+          border:
+            isMilestone && !isSelected
+              ? `1px solid ${milestone?.accentBorder || "var(--color-primary-200)"}`
+              : "none",
+          zIndex: isSelected ? 10 : 1,
+          outlineColor: accent,
+        }}
+      >
+        {day}
 
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [delay]);
+        {isMilestone && !isSelected && (
+          <span
+            className="absolute -top-1 -right-1 w-3 h-3 rounded-full flex items-center justify-center"
+            style={{ background: milestone?.gradient || accent }}
+          >
+            <span className="w-1.5 h-1.5 bg-white rounded-full" />
+          </span>
+        )}
+
+        {isSelected && (
+          <span className="absolute -bottom-1.5 left-1/2 -translate-x-1/2">
+            <span
+              className="flex items-center justify-center w-4 h-4 rounded-full"
+              style={{
+                background: "var(--color-surface-50)",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+              }}
+            >
+              <span
+                className="w-2 h-2 rounded-full"
+                style={{ background: accent }}
+              />
+            </span>
+          </span>
+        )}
+      </button>
+    );
+  },
+);
+CalendarDay.displayName = "CalendarDay";
+
+// ── Calendar Grid ──────────────────────────────────────
+
+const CalendarGrid = memo(({ selectedDay, setSelectedDay, isVisible }) => {
+  const [hoveredCard, setHoveredCard] = useState(false);
 
   return (
     <div
-      ref={ref}
-      className={`transition-all duration-700 ease-out ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-      } ${className}`}
+      className="relative rounded-[1.5rem] overflow-hidden transition-all duration-500"
+      style={{
+        background: "var(--color-surface-50)",
+        border: `1px solid ${hoveredCard ? "var(--color-accent-200)" : "var(--color-secondary-200)"}`,
+        boxShadow: hoveredCard
+          ? "0 25px 60px -12px rgba(0,0,0,0.08), 0 12px 28px -8px rgba(0,0,0,0.04)"
+          : "0 4px 16px -4px rgba(0,0,0,0.04), 0 2px 8px -2px rgba(0,0,0,0.02)",
+      }}
+      onMouseEnter={() => setHoveredCard(true)}
+      onMouseLeave={() => setHoveredCard(false)}
     >
-      {children}
+      {/* Top accent bar */}
+      <div
+        className="h-1 w-full transition-all duration-500"
+        style={{
+          background: hoveredCard
+            ? "linear-gradient(90deg, var(--color-accent-400), var(--color-warning-400), var(--color-error-400))"
+            : "linear-gradient(90deg, transparent, var(--color-secondary-300), transparent)",
+          opacity: hoveredCard ? 1 : 0.4,
+        }}
+      />
+
+      <div className="p-5 sm:p-6 md:p-8">
+        {/* Calendar header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <h3
+              className="text-lg sm:text-xl font-bold"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              Your First Month
+            </h3>
+            <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
+              30 Days to Clarity
+            </p>
+          </div>
+          <div
+            className="flex items-center gap-3 text-xs sm:text-sm"
+            style={{ color: "var(--color-text-muted)" }}
+          >
+            <span className="flex items-center gap-1.5">
+              <span
+                className="w-3 h-3 rounded"
+                style={{
+                  background: "var(--color-accent-50)",
+                  border: "1px solid var(--color-accent-200)",
+                }}
+              />
+              Milestone
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span
+                className="w-3 h-3 rounded"
+                style={{
+                  background:
+                    "linear-gradient(135deg, var(--color-accent-500), var(--color-error-400))",
+                }}
+              />
+              Selected
+            </span>
+          </div>
+        </div>
+
+        {/* Weekday headers */}
+        <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 sm:mb-3">
+          {WEEKDAYS.map((day, i) => (
+            <div
+              key={i}
+              className="text-center text-[10px] sm:text-xs font-semibold uppercase tracking-wider py-1 sm:py-2"
+              style={{ color: "var(--color-text-light)" }}
+            >
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {/* Days grid */}
+        <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+          <div aria-hidden="true" />
+          {DAYS.map((day, index) => {
+            const isMilestone = HIGHLIGHTED_DAYS.includes(day);
+            const milestone = MILESTONES[day] || null;
+
+            return (
+              <CalendarDay
+                key={day}
+                day={day}
+                isMilestone={isMilestone}
+                isSelected={selectedDay === day}
+                milestone={milestone}
+                onClick={() => isMilestone && setSelectedDay(day)}
+                isVisible={isVisible}
+                delay={300 + index * 12}
+              />
+            );
+          })}
+        </div>
+
+        {/* Bottom navigation */}
+        <div
+          className="mt-6 pt-6"
+          style={{
+            borderTop: "1px solid",
+            borderColor: "var(--color-secondary-200)",
+          }}
+        >
+          {/* Mobile: arrow nav */}
+          <div className="flex lg:hidden items-center justify-center gap-4">
+            <NavButton
+              direction="left"
+              day={selectedDay}
+              setSelectedDay={setSelectedDay}
+            />
+            <div className="flex items-center gap-2">
+              {HIGHLIGHTED_DAYS.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => setSelectedDay(d)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: d === selectedDay ? 24 : 8,
+                    height: 8,
+                    background:
+                      d === selectedDay
+                        ? "linear-gradient(135deg, var(--color-accent-500), var(--color-error-400))"
+                        : "var(--color-secondary-300)",
+                  }}
+                  aria-label={`Go to day ${d}`}
+                />
+              ))}
+            </div>
+            <NavButton
+              direction="right"
+              day={selectedDay}
+              setSelectedDay={setSelectedDay}
+            />
+          </div>
+
+          {/* Desktop: keyboard hint */}
+          <div className="hidden lg:flex justify-center">
+            <span
+              className="text-xs flex items-center gap-2"
+              style={{ color: "var(--color-text-light)" }}
+            >
+              <kbd
+                className="px-2 py-1 rounded text-[10px] font-mono"
+                style={{
+                  background: "var(--color-secondary-100)",
+                  color: "var(--color-text-muted)",
+                  border: "1px solid var(--color-secondary-300)",
+                }}
+              >
+                ←
+              </kbd>
+              <kbd
+                className="px-2 py-1 rounded text-[10px] font-mono"
+                style={{
+                  background: "var(--color-secondary-100)",
+                  color: "var(--color-text-muted)",
+                  border: "1px solid var(--color-secondary-300)",
+                }}
+              >
+                →
+              </kbd>
+              to navigate milestones
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
-};
+});
+CalendarGrid.displayName = "CalendarGrid";
 
-// Calendar Day Button Component
-const CalendarDay = ({
-  day,
-  isMilestone,
-  isSelected,
-  milestone,
-  onClick,
-  isInView,
-  animationDelay,
-}) => {
+// ── Nav Button ─────────────────────────────────────────
+
+const NavButton = memo(({ direction, day, setSelectedDay }) => {
+  const idx = HIGHLIGHTED_DAYS.indexOf(day);
+  const isLeft = direction === "left";
+  const disabled = isLeft ? idx <= 0 : idx >= HIGHLIGHTED_DAYS.length - 1;
+
+  const handleClick = useCallback(() => {
+    if (disabled) return;
+    const next = isLeft ? HIGHLIGHTED_DAYS[idx - 1] : HIGHLIGHTED_DAYS[idx + 1];
+    setSelectedDay(next);
+  }, [idx, disabled, isLeft, setSelectedDay]);
+
   return (
     <button
-      onClick={onClick}
-      disabled={!isMilestone}
-      className={`
-        relative aspect-square rounded-xl flex items-center justify-center
-        text-xs sm:text-sm font-medium transition-all duration-300
-        ${
-          isSelected
-            ? "bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-200 scale-110 z-10"
-            : isMilestone
-              ? "bg-primary-100 text-primary-700 hover:bg-primary-200 hover:scale-105 cursor-pointer"
-              : "bg-white text-text-light cursor-default"
-        }
-        ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"}
-      `}
-      style={{ transitionDelay: `${animationDelay}ms` }}
+      onClick={handleClick}
+      disabled={disabled}
+      className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 outline-none focus-visible:ring-2"
+      style={{
+        background: "var(--color-surface-50)",
+        border: "1px solid var(--color-secondary-200)",
+        color: "var(--color-text-secondary)",
+        opacity: disabled ? 0.3 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
+        boxShadow: "0 2px 8px -2px rgba(0,0,0,0.06)",
+        outlineColor: "var(--color-accent-500)",
+      }}
+      aria-label={isLeft ? "Previous milestone" : "Next milestone"}
     >
-      {day}
-
-      {/* Milestone indicator dot */}
-      {isMilestone && !isSelected && (
-        <span className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-br from-primary-400 to-primary-500 rounded-full flex items-center justify-center">
-          <span className="w-1.5 h-1.5 bg-white rounded-full" />
-        </span>
-      )}
-
-      {/* Selected milestone icon */}
-      {isSelected && milestone && (
-        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2">
-          <span className="flex items-center justify-center w-5 h-5 bg-white rounded-full shadow-sm">
-            <span className="w-2 h-2 bg-primary-500 rounded-full" />
-          </span>
-        </span>
-      )}
-
-      {/* Pulse effect for milestones */}
-      {isMilestone && !isSelected && (
-        <span className="absolute inset-0 rounded-xl bg-primary-400 animate-ping opacity-20" />
-      )}
+      {isLeft ? <ChevronLeftIcon /> : <ChevronRightIcon />}
     </button>
   );
-};
+});
+NavButton.displayName = "NavButton";
 
-// Milestone Detail Card Component
-const MilestoneCard = ({ milestone, day, isVisible }) => {
+// ── Milestone Card ─────────────────────────────────────
+
+const MilestoneCard = memo(({ milestone, day, isVisible }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
   if (!milestone) {
     return (
-      <div className="bg-gradient-to-br from-secondary-50 to-white dark:from-dark-surface dark:to-dark-surface-light rounded-3xl p-8 sm:p-10 text-center border border-secondary-200 dark:border-dark-border shadow-lg">
-        <div className="w-20 h-20 mx-auto mb-6 bg-secondary-100 dark:bg-dark-surface-light rounded-2xl flex items-center justify-center">
-          <Icons.Calendar />
+      <div
+        className="rounded-[1.5rem] p-8 sm:p-10 text-center transition-all duration-500"
+        style={{
+          background: "var(--color-surface-50)",
+          border: "1px solid var(--color-secondary-200)",
+          boxShadow: "0 4px 16px -4px rgba(0,0,0,0.04)",
+        }}
+      >
+        <div
+          className="w-20 h-20 mx-auto mb-6 rounded-2xl flex items-center justify-center"
+          style={{
+            background: "var(--color-secondary-100)",
+            color: "var(--color-text-light)",
+          }}
+        >
+          <CalendarIcon />
         </div>
-        <h3 className="text-xl font-bold text-text-light dark:text-dark-text-muted mb-2">
+        <h3
+          className="text-xl font-bold mb-2"
+          style={{ color: "var(--color-text-light)" }}
+        >
           Select a Milestone
         </h3>
-        <p className="text-text-light dark:text-dark-text-muted">
+        <p style={{ color: "var(--color-text-muted)" }}>
           Click on a highlighted day to see what happens
         </p>
       </div>
     );
   }
 
-  const { Icon, title, description, events, iconBg, bgGradient, gradient } =
-    milestone;
+  const {
+    Icon,
+    title,
+    description,
+    events,
+    accent,
+    accentLight,
+    accentBorder,
+    accentDark,
+    gradient,
+  } = milestone;
+  const progress = Math.round((day / 30) * 100);
 
   return (
     <div
-      className={`bg-gradient-to-br ${bgGradient} dark:from-dark-surface dark:to-dark-surface-light rounded-3xl p-6 sm:p-8 border border-white/50 dark:border-dark-border shadow-xl transition-all duration-500 ${
-        isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-      }`}
+      className="relative rounded-[1.5rem] overflow-hidden transition-all duration-500"
+      style={{
+        background: "var(--color-surface-50)",
+        border: `1px solid ${isHovered ? accentBorder : "var(--color-secondary-200)"}`,
+        boxShadow: isHovered
+          ? `0 25px 60px -12px rgba(0,0,0,0.08), 0 12px 28px -8px rgba(0,0,0,0.04), 0 0 0 1px ${accentBorder}`
+          : "0 4px 16px -4px rgba(0,0,0,0.04), 0 2px 8px -2px rgba(0,0,0,0.02)",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(20px)",
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Icon */}
+      {/* Accent top bar */}
       <div
-        className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl ${iconBg} flex items-center justify-center text-white shadow-lg mb-6`}
-      >
-        <Icon />
-      </div>
+        className="h-1 w-full transition-all duration-500"
+        style={{
+          background: isHovered ? gradient : "transparent",
+          opacity: isHovered ? 1 : 0,
+        }}
+      />
 
-      {/* Day badge */}
-      <div className="flex items-center gap-3 mb-4">
-        <span
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur text-sm font-semibold bg-gradient-to-r ${gradient} bg-clip-text text-transparent border border-white shadow-sm`}
+      {/* Hover glow */}
+      <div
+        className="absolute -inset-1 rounded-[2rem] pointer-events-none transition-opacity duration-500"
+        style={{
+          background: `radial-gradient(circle at 50% 30%, ${accent}, transparent 70%)`,
+          filter: "blur(40px)",
+          opacity: isHovered ? 0.08 : 0,
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative p-6 sm:p-8">
+        {/* Icon */}
+        <div
+          className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300"
+          style={{
+            background: gradient,
+            color: "#fff",
+            boxShadow: `0 8px 24px -4px color-mix(in srgb, ${accent} 35%, transparent)`,
+            transform: isHovered
+              ? "scale(1.05) rotate(-3deg)"
+              : "scale(1) rotate(0)",
+          }}
         >
-          <Icons.Clock />
-          Day {day}
-        </span>
-        {day === 1 && (
-          <span className="px-2 py-1 bg-emerald-100 text-emerald-600 text-xs font-medium rounded-full">
-            Start Here
-          </span>
-        )}
-      </div>
+          <Icon />
+        </div>
 
-      {/* Title */}
-      <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-dark-text mb-3">
-        {title}
-      </h3>
-
-      {/* Description */}
-      <p className="text-gray-600 dark:text-dark-text-muted leading-relaxed mb-6">
-        {description}
-      </p>
-
-      {/* Events timeline */}
-      <div className="space-y-3">
-        <p className="text-sm font-semibold text-gray-500 dark:text-dark-text-muted uppercase tracking-wider">
-          What Happens
-        </p>
-        {events.map((event, i) => (
-          <div
-            key={i}
-            className={`flex items-center gap-3 p-3 sm:p-4 bg-white/80 dark:bg-dark-surface/80 backdrop-blur rounded-xl border border-white dark:border-dark-border shadow-sm transition-all duration-500 hover:shadow-md ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-4"
-            }`}
-            style={{ transitionDelay: `${300 + i * 100}ms` }}
+        {/* Day badge */}
+        <div className="flex items-center gap-3 mb-4">
+          <span
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold"
+            style={{
+              background: accentLight,
+              color: accent,
+              border: `1px solid ${accentBorder}`,
+            }}
           >
-            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-              <Icons.Check />
+            <ClockIcon />
+            Day {day}
+          </span>
+          {day === 1 && (
+            <span
+              className="px-2.5 py-1 text-xs font-semibold rounded-full"
+              style={{
+                background: "var(--color-success-50)",
+                color: "var(--color-success-600)",
+                border: "1px solid var(--color-success-200)",
+              }}
+            >
+              Start Here
             </span>
-            <span className="flex-1 text-gray-700 dark:text-dark-text text-sm sm:text-base">
-              {event.text}
+          )}
+        </div>
+
+        {/* Title */}
+        <h3
+          className="text-xl sm:text-2xl font-bold mb-3"
+          style={{ color: "var(--color-text-primary)" }}
+        >
+          {title}
+        </h3>
+
+        {/* Description */}
+        <p
+          className="text-sm sm:text-base leading-relaxed mb-6"
+          style={{ color: "var(--color-text-muted)" }}
+        >
+          {description}
+        </p>
+
+        {/* Divider */}
+        <div
+          className="h-px w-full mb-5"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${accentBorder}, transparent)`,
+          }}
+        />
+
+        {/* Events */}
+        <div className="space-y-2.5">
+          <p
+            className="text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-3"
+            style={{ color: "var(--color-text-light)" }}
+          >
+            What Happens
+          </p>
+          {events.map((event, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 p-3 sm:p-3.5 rounded-xl transition-all duration-500"
+              style={{
+                background: "var(--color-secondary-50)",
+                border: "1px solid var(--color-secondary-200)",
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? "translateX(0)" : "translateX(-8px)",
+                transitionDelay: `${400 + i * 80}ms`,
+              }}
+            >
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
+                style={{
+                  background: "var(--color-success-50)",
+                  color: "var(--color-success-500)",
+                  border: "1px solid var(--color-success-200)",
+                }}
+              >
+                <CheckIcon />
+              </div>
+              <span
+                className="flex-1 text-sm"
+                style={{ color: "var(--color-text-secondary)" }}
+              >
+                {event.text}
+              </span>
+              <span
+                className="text-xs font-medium"
+                style={{ color: "var(--color-text-light)" }}
+              >
+                {event.time}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Progress bar */}
+        <div
+          className="mt-6 pt-5"
+          style={{
+            borderTop: "1px solid var(--color-secondary-200)",
+          }}
+        >
+          <div className="flex items-center justify-between text-sm mb-2.5">
+            <span style={{ color: "var(--color-text-muted)" }}>
+              Journey Progress
             </span>
-            <span className="text-xs sm:text-sm text-gray-400 dark:text-dark-text-muted font-medium">
-              {event.time}
+            <span className="font-bold tabular-nums" style={{ color: accent }}>
+              {progress}%
             </span>
           </div>
-        ))}
-      </div>
-
-      {/* Progress indicator */}
-      <div className="mt-6 pt-6 border-t border-white/50 dark:border-dark-border/50">
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-dark-text-muted mb-2">
-          <span>Journey Progress</span>
-          <span className="font-semibold">{Math.round((day / 30) * 100)}%</span>
-        </div>
-        <div className="h-2 bg-white/50 dark:bg-dark-surface-light/50 rounded-full overflow-hidden">
           <div
-            className={`h-full bg-gradient-to-r ${gradient} rounded-full transition-all duration-1000`}
-            style={{ width: `${(day / 30) * 100}%` }}
-          />
+            className="h-2 rounded-full overflow-hidden"
+            style={{ background: "var(--color-secondary-100)" }}
+          >
+            <div
+              className="h-full rounded-full transition-all duration-1000 ease-out"
+              style={{
+                width: `${progress}%`,
+                background: gradient,
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
-};
+});
+MilestoneCard.displayName = "MilestoneCard";
 
-// Timeline Navigation Component
-const TimelineNav = ({ milestoneKeys, selectedDay, setSelectedDay }) => {
-  const currentIndex = milestoneKeys.indexOf(selectedDay);
+// ── Quick Jump Buttons ─────────────────────────────────
 
-  const goToPrev = () => {
-    if (currentIndex > 0) {
-      setSelectedDay(milestoneKeys[currentIndex - 1]);
-    }
-  };
+const QuickJumpButtons = memo(({ selectedDay, setSelectedDay, isVisible }) => (
+  <div
+    className="hidden lg:flex flex-wrap gap-2 mt-6 transition-all duration-700"
+    style={{
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? "translateY(0)" : "translateY(8px)",
+      transitionDelay: "500ms",
+    }}
+  >
+    {HIGHLIGHTED_DAYS.map((day) => {
+      const m = MILESTONES[day];
+      const isActive = selectedDay === day;
 
-  const goToNext = () => {
-    if (currentIndex < milestoneKeys.length - 1) {
-      setSelectedDay(milestoneKeys[currentIndex + 1]);
-    }
-  };
+      return (
+        <button
+          key={day}
+          onClick={() => setSelectedDay(day)}
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 outline-none focus-visible:ring-2"
+          style={{
+            background: isActive ? m.accentLight : "var(--color-surface-50)",
+            color: isActive ? m.accent : "var(--color-text-secondary)",
+            border: `1px solid ${isActive ? m.accentBorder : "var(--color-secondary-200)"}`,
+            outlineColor: m.accent,
+          }}
+        >
+          <span
+            className="w-5 h-5 rounded-full flex items-center justify-center"
+            style={{ background: m.gradient }}
+          >
+            <span className="w-2 h-2 bg-white rounded-full" />
+          </span>
+          Day {day}
+        </button>
+      );
+    })}
+  </div>
+));
+QuickJumpButtons.displayName = "QuickJumpButtons";
 
-  return (
-    <div className="flex items-center justify-center gap-4 mt-6">
-      <button
-        onClick={goToPrev}
-        disabled={currentIndex === 0}
-        className="w-10 h-10 rounded-full bg-white shadow-md border border-secondary-200 flex items-center justify-center text-text-secondary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary-50 transition-all"
-      >
-        <Icons.ChevronLeft />
-      </button>
+// ── MAIN COMPONENT ─────────────────────────────────────
 
-      <div className="flex items-center gap-2">
-        {milestoneKeys.map((day, i) => (
-          <button
-            key={day}
-            onClick={() => setSelectedDay(day)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              day === selectedDay
-                ? "w-6 bg-primary-500"
-                : "bg-secondary-300 hover:bg-secondary-400"
-            }`}
-          />
-        ))}
-      </div>
-
-      <button
-        onClick={goToNext}
-        disabled={currentIndex === milestoneKeys.length - 1}
-        className="w-10 h-10 rounded-full bg-white shadow-md border border-secondary-200 flex items-center justify-center text-text-secondary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary-50 transition-all"
-      >
-        <Icons.ChevronRight />
-      </button>
-    </div>
-  );
-};
-
-// Main Journey Component
 const Journey = () => {
-  const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
+  const [headerRef, headerVisible] = useInView(0.15);
+  const [calendarRef, calendarVisible] = useInView(0.08);
+  const [cardRef, cardVisible] = useInView(0.08);
   const [selectedDay, setSelectedDay] = useState(1);
 
-  const days = Array.from({ length: 30 }, (_, i) => i + 1);
-  const highlightedDays = [1, 2, 7, 30];
-  const currentMilestone = milestones[selectedDay] || null;
-
-  // Intersection Observer
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
+  const currentMilestone = MILESTONES[selectedDay] || null;
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const currentIndex = highlightedDays.indexOf(selectedDay);
-
-      if (e.key === "ArrowLeft" && currentIndex > 0) {
-        setSelectedDay(highlightedDays[currentIndex - 1]);
-      } else if (
-        e.key === "ArrowRight" &&
-        currentIndex < highlightedDays.length - 1
-      ) {
-        setSelectedDay(highlightedDays[currentIndex + 1]);
+      const idx = HIGHLIGHTED_DAYS.indexOf(selectedDay);
+      if (e.key === "ArrowLeft" && idx > 0) {
+        setSelectedDay(HIGHLIGHTED_DAYS[idx - 1]);
+      } else if (e.key === "ArrowRight" && idx < HIGHLIGHTED_DAYS.length - 1) {
+        setSelectedDay(HIGHLIGHTED_DAYS[idx + 1]);
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedDay]);
 
   return (
     <section
-      ref={ref}
       id="journey"
-      className="py-20 sm:py-24 md:py-32 px-4 sm:px-6 bg-secondary-100 dark:bg-dark-bg overflow-hidden"
+      className="relative py-20 sm:py-28 md:py-36 lg:py-44 px-4 sm:px-6 overflow-hidden"
+      style={{ background: "var(--color-secondary-100)" }}
+      aria-labelledby="journey-heading"
     >
-      {/* Background decorations */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-primary-100/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary-100/30 rounded-full blur-3xl pointer-events-none" />
+      <SectionBackground />
 
-      <div className="max-w-6xl mx-auto relative">
+      <div className="relative max-w-6xl mx-auto">
+        <h2 className="sr-only" id="journey-heading">
+          Your 30-day transformation journey
+        </h2>
+
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <FadeIn>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-primary-200 dark:border-primary-700">
-              <Icons.Calendar />
-              <span>Chapter Four</span>
-            </span>
-          </FadeIn>
-
-          <FadeIn delay={100}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-text-primary dark:text-dark-text mb-3 sm:mb-4">
-              Your 30-Day
-              <br />
-              <span className="italic text-primary-600 dark:text-primary-400">
-                Transformation
-              </span>
-            </h2>
-          </FadeIn>
-
-          <FadeIn delay={200}>
-            <p className="text-lg sm:text-xl text-text-muted dark:text-dark-text-muted max-w-2xl mx-auto">
-              From setup to success — see exactly what happens at each milestone
-            </p>
-          </FadeIn>
+        <div ref={headerRef}>
+          <SectionHeader isVisible={headerVisible} />
         </div>
 
-        {/* Main content grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        {/* Content grid */}
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-start">
           {/* Calendar */}
-          <FadeIn delay={300}>
-            <div className="bg-gradient-to-br from-secondary-50 to-white dark:from-dark-surface dark:to-dark-surface-light rounded-3xl p-5 sm:p-6 md:p-8 border border-secondary-200 dark:border-dark-border shadow-xl">
-              {/* Calendar header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-                <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-text-primary dark:text-dark-text">
-                    Your First Month
-                  </h3>
-                  <p className="text-sm text-text-light dark:text-dark-text-muted">
-                    30 Days to Clarity
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-text-muted dark:text-dark-text-muted">
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded bg-primary-100" />
-                    Milestone
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <span className="w-3 h-3 rounded bg-primary-500" />
-                    Selected
-                  </span>
-                </div>
-              </div>
-
-              {/* Day headers */}
-              <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 sm:mb-4">
-                {["S", "M", "T", "W", "T", "F", "S"].map((day, i) => (
-                  <div
-                    key={i}
-                    className="text-center text-xs sm:text-sm font-medium text-text-light dark:text-dark-text-muted py-1 sm:py-2"
-                  >
-                    {day}
-                  </div>
-                ))}
-              </div>
-
-              {/* Days grid */}
-              <div className="grid grid-cols-7 gap-1 sm:gap-2">
-                {/* Empty cell for offset (assuming month starts on Monday) */}
-                <div />
-
-                {days.map((day, index) => {
-                  const isMilestone = highlightedDays.includes(day);
-                  const isSelected = selectedDay === day;
-                  const milestone = milestones[day];
-
-                  return (
-                    <CalendarDay
-                      key={day}
-                      day={day}
-                      isMilestone={isMilestone}
-                      isSelected={isSelected}
-                      milestone={milestone}
-                      onClick={() => isMilestone && setSelectedDay(day)}
-                      isInView={isInView}
-                      animationDelay={400 + index * 15}
-                    />
-                  );
-                })}
-              </div>
-
-              {/* Timeline navigation (mobile) */}
-              <div className="lg:hidden mt-6 pt-6 border-t border-secondary-200 dark:border-dark-border">
-                <TimelineNav
-                  milestoneKeys={highlightedDays}
-                  selectedDay={selectedDay}
-                  setSelectedDay={setSelectedDay}
-                />
-              </div>
-
-              {/* Keyboard hint (desktop) */}
-              <div className="hidden lg:flex justify-center mt-6 pt-6 border-t border-secondary-200 dark:border-dark-border">
-                <span className="text-xs text-text-light dark:text-dark-text-muted flex items-center gap-2">
-                  <kbd className="px-2 py-1 bg-secondary-100 dark:bg-dark-surface rounded text-text-muted dark:text-dark-text-muted font-mono text-xs">
-                    ←
-                  </kbd>
-                  <kbd className="px-2 py-1 bg-secondary-100 dark:bg-dark-surface rounded text-text-muted dark:text-dark-text-muted font-mono text-xs">
-                    →
-                  </kbd>
-                  <span>to navigate milestones</span>
-                </span>
-              </div>
-            </div>
-          </FadeIn>
-
-          {/* Milestone details */}
-          <FadeIn delay={400}>
-            <div className="lg:sticky lg:top-24">
-              <MilestoneCard
-                milestone={currentMilestone}
-                day={selectedDay}
-                isVisible={isInView}
-              />
-
-              {/* Quick jump buttons (desktop) */}
-              <div className="hidden lg:flex flex-wrap gap-2 mt-6">
-                {highlightedDays.map((day) => {
-                  const milestone = milestones[day];
-                  const isActive = selectedDay === day;
-
-                  return (
-                    <button
-                      key={day}
-                      onClick={() => setSelectedDay(day)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                        isActive
-                          ? "bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border-primary-200 dark:border-primary-700"
-                          : "bg-white dark:bg-dark-surface text-text-secondary dark:text-dark-text-muted hover:bg-secondary-50 dark:hover:bg-dark-surface-light border-secondary-200 dark:border-dark-border"
-                      } border`}
-                    >
-                      <span
-                        className={`${milestone.iconBg} w-5 h-5 rounded-full flex items-center justify-center`}
-                      >
-                        <span className="w-2 h-2 bg-white rounded-full" />
-                      </span>
-                      Day {day}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-
-        {/* Bottom CTA */}
-        <FadeIn delay={600}>
-          <div className="mt-16 sm:mt-20 text-center">
-            <div className="inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-6 sm:p-8 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-900/20 dark:to-dark-surface rounded-3xl border border-primary-100 dark:border-primary-800">
-              <div className="text-center sm:text-left">
-                <h3 className="text-lg sm:text-xl font-bold text-text-primary dark:text-dark-text mb-1">
-                  Ready to start your journey?
-                </h3>
-                <p className="text-text-muted dark:text-dark-text-muted text-sm sm:text-base">
-                  Join 15,000+ creators who transformed their growth
-                </p>
-              </div>
-              <button className="group flex items-center gap-2 px-6 py-3 bg-primary-600 dark:bg-primary-500 text-white rounded-full font-medium hover:bg-primary-700 dark:hover:bg-primary-600 transition-all shadow-lg hover:shadow-xl">
-                Start Day 1 Now
-                <span className="group-hover:translate-x-1 transition-transform">
-                  <Icons.ArrowRight />
-                </span>
-              </button>
-            </div>
+          <div
+            ref={calendarRef}
+            className="transition-all duration-700"
+            style={{
+              opacity: calendarVisible ? 1 : 0,
+              transform: calendarVisible ? "translateY(0)" : "translateY(20px)",
+              transitionDelay: "200ms",
+            }}
+          >
+            <CalendarGrid
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              isVisible={calendarVisible}
+            />
           </div>
-        </FadeIn>
+
+          {/* Milestone card */}
+          <div
+            ref={cardRef}
+            className="lg:sticky lg:top-24 transition-all duration-700"
+            style={{
+              opacity: cardVisible ? 1 : 0,
+              transform: cardVisible ? "translateY(0)" : "translateY(20px)",
+              transitionDelay: "350ms",
+            }}
+          >
+            <MilestoneCard
+              key={selectedDay}
+              milestone={currentMilestone}
+              day={selectedDay}
+              isVisible={cardVisible}
+            />
+
+            <QuickJumpButtons
+              selectedDay={selectedDay}
+              setSelectedDay={setSelectedDay}
+              isVisible={cardVisible}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Animation styles */}
+      {/* Keyframes */}
       <style>{`
         @keyframes ping {
-          75%, 100% {
-            transform: scale(1.5);
-            opacity: 0;
-          }
-        }
-        .animate-ping {
-          animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+          75%, 100% { transform: scale(2); opacity: 0; }
         }
       `}</style>
     </section>
   );
 };
 
-export default Journey;
+export default memo(Journey);

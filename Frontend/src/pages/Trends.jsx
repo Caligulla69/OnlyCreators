@@ -17,8 +17,16 @@ import { useTrends } from "../hooks/useTrends";
 import { TREND_CATEGORIES } from "../utils/constants";
 
 const StatCard = memo(
-  ({ label, value, icon: IconComponent, color, bgColor }) => (
-    <div className="relative overflow-hidden bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 group">
+  ({
+    label,
+    value,
+    icon: IconComponent,
+    color,
+    bgColor,
+    darkColor,
+    darkBgColor,
+  }) => (
+    <div className="relative overflow-hidden bg-surface-50 dark:bg-dark-surface rounded-2xl p-5 border border-surface-200 dark:border-dark-border shadow-sm hover:shadow-md dark:hover:shadow-black/30 transition-all duration-300 group">
       <div
         className="absolute -top-4 -right-4 w-20 h-20 rounded-full opacity-20 group-hover:scale-150 transition-transform duration-500"
         style={{ backgroundColor: bgColor }}
@@ -28,9 +36,13 @@ const StatCard = memo(
           <div className="p-2 rounded-xl" style={{ backgroundColor: bgColor }}>
             <IconComponent className="w-4 h-4" style={{ color }} />
           </div>
-          <span className="text-sm font-medium text-gray-500">{label}</span>
+          <span className="text-sm font-medium text-text-muted dark:text-dark-text-muted">
+            {label}
+          </span>
         </div>
-        <p className="text-2xl font-bold text-gray-900">{value}</p>
+        <p className="text-2xl font-bold text-text-primary dark:text-dark-text">
+          {value}
+        </p>
       </div>
     </div>
   ),
@@ -40,13 +52,12 @@ const Trends = () => {
   const { trends, isLoading, category, setCategory } = useTrends();
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
-  const [sortBy, setSortBy] = useState("opportunityScore"); // 'opportunityScore', 'searchVolume', 'strength'
+  const [viewMode, setViewMode] = useState("grid");
+  const [sortBy, setSortBy] = useState("opportunityScore");
 
   const filteredTrends = useMemo(() => {
     let result = [...trends];
 
-    // Filter by search query
     if (searchQuery) {
       result = result.filter(
         (trend) =>
@@ -57,13 +68,11 @@ const Trends = () => {
       );
     }
 
-    // Sort trends
     result.sort((a, b) => {
       if (sortBy === "opportunityScore") {
         return b.opportunityScore - a.opportunityScore;
       }
       if (sortBy === "searchVolume") {
-        // Parse search volume strings like "2.5M+"
         const parseVolume = (str) => {
           const num = parseFloat(str.replace(/[^0-9.]/g, ""));
           if (str.includes("M")) return num * 1000000;
@@ -96,7 +105,6 @@ const Trends = () => {
   );
 
   const handleExplore = useCallback((trend) => {
-    console.log("Exploring trend:", trend.topic);
     // In a real app, this would navigate to a detailed view or open a modal
   }, []);
 
@@ -110,12 +118,15 @@ const Trends = () => {
     <div className="space-y-6 pb-8">
       {/* Header */}
       <div className="relative">
-        <div className="absolute -top-10 -right-10 w-60 h-60 bg-gradient-to-br from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-10 -right-10 w-60 h-60 bg-gradient-to-br from-primary-300/20 to-accent-400/20 dark:from-primary-600/10 dark:to-accent-600/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
+              <div className="p-3 bg-gradient-to-br from-success-500 to-success-600 dark:from-success-400 dark:to-success-500 rounded-2xl shadow-lg shadow-success-500/30">
+                <IoTrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-text-primary dark:text-dark-text">
                 Trend Detection
               </h1>
               {stats.highTrends > 0 && (
@@ -124,8 +135,8 @@ const Trends = () => {
                 </Badge>
               )}
             </div>
-            <p className="text-gray-500 flex items-center gap-2">
-              <IoFlame className="w-4 h-4 text-orange-500" />
+            <p className="text-text-muted dark:text-dark-text-muted flex items-center gap-2 ml-16">
+              <IoFlame className="w-4 h-4 text-warning-500 dark:text-warning-400" />
               Discover trending topics before they peak
             </p>
           </div>
@@ -138,44 +149,52 @@ const Trends = () => {
           label="Total Trends"
           value={stats.total}
           icon={IoTrendingUp}
-          color="#10B981"
-          bgColor="#ECFDF5"
+          color="#3a7a4a"
+          bgColor="#eef5f0"
+          darkColor="#86efac"
+          darkBgColor="rgba(34,197,94,0.15)"
         />
         <StatCard
           label="High Potential"
           value={stats.highTrends}
           icon={IoFlame}
-          color="#F59E0B"
-          bgColor="#FEF3C7"
+          color="#d6871c"
+          bgColor="#fef9ee"
+          darkColor="#fcd34d"
+          darkBgColor="rgba(245,158,11,0.15)"
         />
         <StatCard
           label="Uncovered"
           value={stats.uncovered}
           icon={IoSparkles}
-          color="#8B5CF6"
-          bgColor="#F5F3FF"
+          color="#1e4d5e"
+          bgColor="#e6f0f3"
+          darkColor="#a5b4fc"
+          darkBgColor="rgba(99,102,241,0.15)"
         />
         <StatCard
           label="Avg. Opportunity"
           value={`${stats.avgOpportunity}%`}
           icon={IoBookmarkOutline}
-          color="#06B6D4"
-          bgColor="#ECFEFF"
+          color="#2a6275"
+          bgColor="#c2dce4"
+          darkColor="#67e8f9"
+          darkBgColor="rgba(6,182,212,0.15)"
         />
       </div>
 
       {/* Filter Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 bg-surface-50 dark:bg-dark-surface rounded-2xl border border-surface-200 dark:border-dark-border shadow-sm">
         <div className="flex items-center gap-4 flex-1">
           {/* Search */}
           <div className="relative flex-1 max-w-md">
-            <IoSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <IoSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-light dark:text-dark-text-muted" />
             <input
               type="text"
               placeholder="Search trends or hashtags..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-surface-100 dark:bg-dark-surface-light border border-surface-300 dark:border-dark-border rounded-xl text-sm text-text-primary dark:text-dark-text placeholder:text-text-light dark:placeholder:text-dark-text-muted focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent transition-all"
             />
           </div>
 
@@ -183,16 +202,16 @@ const Trends = () => {
           <div className="relative">
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="flex items-center justify-between gap-3 px-4 py-2.5 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl min-w-[180px] transition-colors"
+              className="flex items-center justify-between gap-3 px-4 py-2.5 bg-surface-100 dark:bg-dark-surface-light hover:bg-surface-200 dark:hover:bg-dark-border border border-surface-300 dark:border-dark-border rounded-xl min-w-[180px] transition-colors"
             >
               <div className="flex items-center gap-2">
-                <IoFilter className="w-4 h-4 text-gray-500" />
-                <span className="text-sm font-medium text-gray-700">
+                <IoFilter className="w-4 h-4 text-text-muted dark:text-dark-text-muted" />
+                <span className="text-sm font-medium text-text-secondary dark:text-dark-text">
                   {selectedCategory?.label || "All Categories"}
                 </span>
               </div>
               <IoChevronDown
-                className={`w-4 h-4 text-gray-400 transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
+                className={`w-4 h-4 text-text-light dark:text-dark-text-muted transition-transform ${isFilterOpen ? "rotate-180" : ""}`}
               />
             </button>
 
@@ -202,7 +221,7 @@ const Trends = () => {
                   className="fixed inset-0 z-40"
                   onClick={() => setIsFilterOpen(false)}
                 />
-                <div className="absolute right-0 mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden animate-fade-in">
+                <div className="absolute right-0 mt-2 w-full bg-surface-50 dark:bg-dark-surface border border-surface-300 dark:border-dark-border rounded-xl shadow-xl dark:shadow-black/40 z-50 overflow-hidden animate-fade-in">
                   {TREND_CATEGORIES.map((cat) => (
                     <button
                       key={cat.value}
@@ -212,8 +231,8 @@ const Trends = () => {
                       }}
                       className={`w-full px-4 py-2.5 text-left text-sm transition-colors ${
                         category === cat.value
-                          ? "bg-primary-50 text-primary-600 font-medium"
-                          : "text-gray-700 hover:bg-gray-50"
+                          ? "bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 font-medium"
+                          : "text-text-primary dark:text-dark-text hover:bg-surface-100 dark:hover:bg-dark-surface-light"
                       }`}
                     >
                       {cat.label}
@@ -231,7 +250,7 @@ const Trends = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            className="px-3 py-2.5 bg-surface-100 dark:bg-dark-surface-light border border-surface-300 dark:border-dark-border rounded-xl text-sm text-text-secondary dark:text-dark-text focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
           >
             <option value="opportunityScore">Opportunity Score</option>
             <option value="searchVolume">Search Volume</option>
@@ -239,13 +258,13 @@ const Trends = () => {
           </select>
 
           {/* View Mode Toggle */}
-          <div className="flex items-center bg-gray-100 rounded-xl p-1">
+          <div className="flex items-center bg-surface-200 dark:bg-dark-surface-light rounded-xl p-1">
             <button
               onClick={() => setViewMode("grid")}
               className={`p-2 rounded-lg transition-colors ${
                 viewMode === "grid"
-                  ? "bg-white text-primary-600 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-surface-50 dark:bg-dark-surface text-primary-700 dark:text-primary-400 shadow-sm"
+                  : "text-text-muted dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text"
               }`}
             >
               <IoGridOutline className="w-4 h-4" />
@@ -254,8 +273,8 @@ const Trends = () => {
               onClick={() => setViewMode("list")}
               className={`p-2 rounded-lg transition-colors ${
                 viewMode === "list"
-                  ? "bg-white text-primary-600 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-surface-50 dark:bg-dark-surface text-primary-700 dark:text-primary-400 shadow-sm"
+                  : "text-text-muted dark:text-dark-text-muted hover:text-text-primary dark:hover:text-dark-text"
               }`}
             >
               <IoListOutline className="w-4 h-4" />
@@ -266,14 +285,14 @@ const Trends = () => {
 
       {/* Results Info */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-text-muted dark:text-dark-text-muted">
           Showing {filteredTrends.length} of {trends.length} trends
           {searchQuery && ` for "${searchQuery}"`}
         </p>
         {searchQuery && (
           <button
             onClick={() => setSearchQuery("")}
-            className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+            className="text-sm text-primary-700 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium"
           >
             Clear search
           </button>
@@ -300,14 +319,14 @@ const Trends = () => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-16 bg-gradient-to-br from-gray-50 to-white rounded-2xl border border-gray-100">
-          <div className="w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-            <IoSearch className="w-10 h-10 text-gray-400" />
+        <div className="text-center py-16 bg-gradient-to-br from-surface-50 via-surface-100 to-surface-50 dark:from-dark-surface dark:via-dark-surface-light dark:to-dark-surface rounded-2xl border border-surface-200 dark:border-dark-border">
+          <div className="w-20 h-20 bg-gradient-to-br from-surface-200 to-surface-300 dark:from-dark-surface-light dark:to-dark-border rounded-full flex items-center justify-center mx-auto mb-4">
+            <IoSearch className="w-10 h-10 text-text-light dark:text-dark-text-muted" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+          <h3 className="text-xl font-semibold text-text-primary dark:text-dark-text mb-2">
             No trends found
           </h3>
-          <p className="text-gray-500 max-w-md mx-auto">
+          <p className="text-text-muted dark:text-dark-text-muted max-w-md mx-auto">
             {searchQuery
               ? `No trends matching "${searchQuery}". Try a different search term.`
               : "No trends available in this category. Check back later for updates."}
@@ -317,16 +336,16 @@ const Trends = () => {
 
       {/* Content Gap Opportunities */}
       {stats.uncovered > 0 && (
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200">
+        <div className="bg-gradient-to-r from-accent-50 to-warning-50 dark:from-accent-900/20 dark:to-warning-900/20 rounded-2xl p-6 border border-accent-200 dark:border-accent-700/40">
           <div className="flex items-start gap-4">
-            <div className="p-3 bg-amber-100 rounded-xl">
-              <IoSparkles className="w-6 h-6 text-amber-600" />
+            <div className="p-3 bg-accent-100 dark:bg-accent-800/30 rounded-xl">
+              <IoSparkles className="w-6 h-6 text-accent-600 dark:text-accent-400" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-1">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text mb-1">
                 Content Gap Opportunities
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-text-secondary dark:text-dark-text-muted mb-4">
                 You haven't covered {stats.uncovered} trending topics yet. These
                 represent potential growth opportunities for your channel.
               </p>
@@ -337,7 +356,7 @@ const Trends = () => {
                   .map((trend) => (
                     <span
                       key={trend.id}
-                      className="px-3 py-1.5 bg-white text-amber-700 text-sm font-medium rounded-full border border-amber-200 hover:bg-amber-50 cursor-pointer transition-colors"
+                      className="px-3 py-1.5 bg-surface-50 dark:bg-dark-surface text-accent-700 dark:text-accent-300 text-sm font-medium rounded-full border border-accent-200 dark:border-accent-700/50 hover:bg-accent-50 dark:hover:bg-accent-900/20 cursor-pointer transition-colors"
                     >
                       {trend.topic}
                     </span>

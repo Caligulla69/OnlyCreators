@@ -14,23 +14,23 @@ const Card = ({
   return (
     <div
       className={`
-        bg-white dark:bg-dark-surface rounded-xl
-        ${bordered ? "border border-gray-200 dark:border-dark-border" : "shadow-sm border border-gray-100 dark:border-dark-border"}
+        bg-surface-50 dark:bg-dark-surface rounded-xl
+        ${bordered ? "border border-surface-300 dark:border-dark-border" : "shadow-sm border border-surface-200 dark:border-dark-border"}
         ${hoverable ? "hover:shadow-lg dark:hover:shadow-black/30 transition-shadow duration-200" : ""}
         ${className}
       `}
       {...props}
     >
       {(title || headerAction) && (
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-dark-border">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-surface-200 dark:border-dark-border">
           <div>
             {title && (
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-dark-text">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-sm text-gray-500 dark:text-dark-text-muted mt-0.5">
+              <p className="text-sm text-text-muted dark:text-dark-text-muted mt-0.5">
                 {subtitle}
               </p>
             )}
@@ -46,7 +46,7 @@ const Card = ({
       </div>
 
       {footer && (
-        <div className="px-6 py-4 border-t border-gray-100 dark:border-dark-border bg-gray-50 dark:bg-dark-surface-light rounded-b-xl">
+        <div className="px-6 py-4 border-t border-surface-200 dark:border-dark-border bg-surface-100 dark:bg-dark-surface-light rounded-b-xl">
           {footer}
         </div>
       )}

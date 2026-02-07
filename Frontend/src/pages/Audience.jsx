@@ -55,7 +55,7 @@ const CHART_COLORS = [
 const StatCard = memo(
   ({ icon: Icon, label, value, subValue, gradient, delay = 0 }) => (
     <div
-      className="relative overflow-hidden bg-white rounded-2xl p-6 border border-surface-300 shadow-sm hover:shadow-xl transition-all duration-500 group animate-fade-in"
+      className="relative overflow-hidden bg-surface-50 dark:bg-dark-surface rounded-2xl p-6 border border-surface-300 dark:border-dark-border shadow-sm hover:shadow-xl dark:hover:shadow-black/30 transition-all duration-500 group animate-fade-in"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Background gradient blob */}
@@ -64,8 +64,8 @@ const StatCard = memo(
       />
 
       {/* Decorative circles */}
-      <div className="absolute top-4 right-4 w-20 h-20 border border-surface-200 rounded-full opacity-30" />
-      <div className="absolute top-6 right-6 w-14 h-14 border border-surface-200 rounded-full opacity-20" />
+      <div className="absolute top-4 right-4 w-20 h-20 border border-surface-200 dark:border-dark-border rounded-full opacity-30" />
+      <div className="absolute top-6 right-6 w-14 h-14 border border-surface-200 dark:border-dark-border rounded-full opacity-20" />
 
       <div className="relative">
         <div className="flex items-center gap-3 mb-4">
@@ -74,14 +74,16 @@ const StatCard = memo(
           >
             <Icon className="w-5 h-5 text-white" />
           </div>
-          <span className="text-sm font-medium text-text-muted">{label}</span>
+          <span className="text-sm font-medium text-text-muted dark:text-dark-text-muted">
+            {label}
+          </span>
         </div>
-        <p className="text-3xl lg:text-4xl font-bold text-text-primary tracking-tight">
+        <p className="text-3xl lg:text-4xl font-bold text-text-primary dark:text-dark-text tracking-tight">
           {value}
         </p>
         {subValue && (
-          <div className="flex items-center gap-1.5 mt-2 text-success-600">
-            <div className="p-1 bg-success-100 rounded-full">
+          <div className="flex items-center gap-1.5 mt-2 text-success-600 dark:text-success-400">
+            <div className="p-1 bg-success-100 dark:bg-success-900/30 rounded-full">
               <IoArrowUp className="w-3 h-3" />
             </div>
             <span className="text-sm font-semibold">{subValue}</span>
@@ -96,7 +98,7 @@ const CustomTooltip = memo(({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
 
   return (
-    <div className="bg-dark-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-white/10 backdrop-blur-xl">
+    <div className="bg-text-primary dark:bg-dark-elevated text-white px-4 py-3 rounded-xl shadow-2xl border border-white/10 dark:border-dark-border backdrop-blur-xl">
       {label && (
         <p className="text-sm font-medium text-white/70 mb-1">{label}</p>
       )}
@@ -119,7 +121,7 @@ const renderActiveShape = (props) => {
         startAngle={startAngle}
         endAngle={endAngle}
         fill={fill}
-        style={{ filter: "drop-shadow(0 8px 16px rgba(102, 40, 67, 0.3))" }}
+        style={{ filter: "drop-shadow(0 8px 16px rgba(30, 77, 94, 0.3))" }}
       />
     </g>
   );
@@ -183,12 +185,12 @@ const Audience = () => {
             <div className="p-3 bg-accent-700 rounded-2xl shadow-lg">
               <IoPeople className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-text-primary">
+            <h1 className="text-3xl sm:text-4xl font-bold text-text-primary dark:text-dark-text">
               Audience Analytics
             </h1>
           </div>
-          <p className="text-text-muted flex items-center gap-2 ml-16">
-            <IoSparkles className="w-4 h-4 text-accent-700" />
+          <p className="text-text-muted dark:text-dark-text-muted flex items-center gap-2 ml-16">
+            <IoSparkles className="w-4 h-4 text-accent-700 dark:text-accent-400" />
             Understand who's watching your content and how they engage
           </p>
         </div>
@@ -231,16 +233,18 @@ const Audience = () => {
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Age Distribution */}
-        <div className="bg-white rounded-2xl border border-surface-300 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-3 p-6 border-b border-surface-200">
+        <div className="bg-surface-50 dark:bg-dark-surface rounded-2xl border border-surface-300 dark:border-dark-border shadow-sm dark:shadow-black/20 overflow-hidden">
+          <div className="flex items-center gap-3 p-6 border-b border-surface-200 dark:border-dark-border">
             <div className="p-2.5 bg-primary-600 rounded-xl shadow-md">
               <IoStatsChart className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-text-primary">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text">
                 Age Distribution
               </h3>
-              <p className="text-sm text-text-muted">Viewer age breakdown</p>
+              <p className="text-sm text-text-muted dark:text-dark-text-muted">
+                Viewer age breakdown
+              </p>
             </div>
           </div>
           <div className="p-6">
@@ -265,7 +269,7 @@ const Audience = () => {
                   </defs>
                   <CartesianGrid
                     strokeDasharray="3 3"
-                    stroke="#e5e0e3"
+                    stroke="var(--color-surface-300)"
                     horizontal
                     vertical={false}
                   />
@@ -273,19 +277,23 @@ const Audience = () => {
                     type="number"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: "#81837D", fontSize: 12 }}
+                    tick={{ fill: "var(--color-text-muted)", fontSize: 12 }}
                   />
                   <YAxis
                     dataKey="range"
                     type="category"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: "#221726", fontSize: 12, fontWeight: 500 }}
+                    tick={{
+                      fill: "var(--color-text-primary)",
+                      fontSize: 12,
+                      fontWeight: 500,
+                    }}
                     width={50}
                   />
                   <Tooltip
                     content={<CustomTooltip />}
-                    cursor={{ fill: "rgba(102, 40, 67, 0.05)" }}
+                    cursor={{ fill: "rgba(30, 77, 94, 0.05)" }}
                   />
                   <Bar
                     dataKey="percentage"
@@ -300,16 +308,16 @@ const Audience = () => {
         </div>
 
         {/* Gender Split */}
-        <div className="bg-white rounded-2xl border border-surface-300 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-3 p-6 border-b border-surface-200">
+        <div className="bg-surface-50 dark:bg-dark-surface rounded-2xl border border-surface-300 dark:border-dark-border shadow-sm dark:shadow-black/20 overflow-hidden">
+          <div className="flex items-center gap-3 p-6 border-b border-surface-200 dark:border-dark-border">
             <div className="p-2.5 bg-secondary-600 rounded-xl shadow-md">
               <IoPeople className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-text-primary">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text">
                 Gender Distribution
               </h3>
-              <p className="text-sm text-text-muted">
+              <p className="text-sm text-text-muted dark:text-dark-text-muted">
                 Audience gender breakdown
               </p>
             </div>
@@ -349,7 +357,7 @@ const Audience = () => {
               {(data?.gender || []).map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-100 hover:bg-surface-200 transition-colors cursor-pointer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-100 dark:bg-dark-surface-light hover:bg-surface-200 dark:hover:bg-dark-border transition-colors cursor-pointer"
                   onMouseEnter={() => setActiveGenderIndex(index)}
                   onMouseLeave={() => setActiveGenderIndex(null)}
                 >
@@ -357,9 +365,9 @@ const Audience = () => {
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: CHART_COLORS[index] }}
                   />
-                  <span className="text-sm text-text-secondary">
+                  <span className="text-sm text-text-secondary dark:text-dark-text-muted">
                     {item.type}:{" "}
-                    <span className="font-bold text-text-primary">
+                    <span className="font-bold text-text-primary dark:text-dark-text">
                       {item.percentage}%
                     </span>
                   </span>
@@ -370,16 +378,18 @@ const Audience = () => {
         </div>
 
         {/* Top Countries */}
-        <div className="bg-white rounded-2xl border border-surface-300 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-3 p-6 border-b border-surface-200">
+        <div className="bg-surface-50 dark:bg-dark-surface rounded-2xl border border-surface-300 dark:border-dark-border shadow-sm dark:shadow-black/20 overflow-hidden">
+          <div className="flex items-center gap-3 p-6 border-b border-surface-200 dark:border-dark-border">
             <div className="p-2.5 bg-gradient-to-br from-success-500 to-cyan-500 rounded-xl shadow-md">
               <IoEarth className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-text-primary">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text">
                 Top Countries
               </h3>
-              <p className="text-sm text-text-muted">Geographic distribution</p>
+              <p className="text-sm text-text-muted dark:text-dark-text-muted">
+                Geographic distribution
+              </p>
             </div>
           </div>
           <div className="p-6 space-y-4">
@@ -397,23 +407,23 @@ const Audience = () => {
                               ? "bg-gradient-to-br from-secondary-300 to-secondary-400 text-white"
                               : index === 2
                                 ? "bg-gradient-to-br from-warning-600 to-warning-700 text-white"
-                                : "bg-surface-200 text-text-muted"
+                                : "bg-surface-200 dark:bg-dark-surface-light text-text-muted dark:text-dark-text-muted"
                         }
                       `}
                     >
                       {index + 1}
                     </span>
-                    <span className="font-semibold text-text-primary group-hover:text-primary-900 transition-colors">
+                    <span className="font-semibold text-text-primary dark:text-dark-text group-hover:text-primary-900 dark:group-hover:text-primary-400 transition-colors">
                       {country.country}
                     </span>
                   </div>
-                  <span className="text-sm font-bold text-text-primary bg-surface-100 px-3 py-1 rounded-full">
+                  <span className="text-sm font-bold text-text-primary dark:text-dark-text bg-surface-100 dark:bg-dark-surface-light px-3 py-1 rounded-full">
                     {country.percentage}%
                   </span>
                 </div>
-                <div className="h-2.5 bg-surface-200 rounded-full overflow-hidden">
+                <div className="h-2.5 bg-surface-200 dark:bg-dark-surface-light rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-cyan-500 rounded-full transition-all duration-700 ease-out"
+                    className="h-full bg-primary-500 dark:bg-primary-400 rounded-full transition-all duration-700 ease-out"
                     style={{ width: `${country.percentage}%` }}
                   />
                 </div>
@@ -423,16 +433,16 @@ const Audience = () => {
         </div>
 
         {/* Device Breakdown */}
-        <div className="bg-white rounded-2xl border border-surface-300 shadow-sm overflow-hidden">
-          <div className="flex items-center gap-3 p-6 border-b border-surface-200">
+        <div className="bg-surface-50 dark:bg-dark-surface rounded-2xl border border-surface-300 dark:border-dark-border shadow-sm dark:shadow-black/20 overflow-hidden">
+          <div className="flex items-center gap-3 p-6 border-b border-surface-200 dark:border-dark-border">
             <div className="p-2.5 bg-accent-600 rounded-xl shadow-md">
               <IoDesktop className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-text-primary">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text">
                 Device Breakdown
               </h3>
-              <p className="text-sm text-text-muted">
+              <p className="text-sm text-text-muted dark:text-dark-text-muted">
                 How viewers watch your content
               </p>
             </div>
@@ -447,9 +457,9 @@ const Audience = () => {
                 return (
                   <div
                     key={index}
-                    className="relative overflow-hidden p-5 bg-gradient-to-br from-surface-50 to-surface-100 rounded-2xl border border-surface-200 hover:border-primary-300 hover:shadow-lg transition-all duration-300 group cursor-pointer"
+                    className="relative overflow-hidden p-5 bg-gradient-to-br from-surface-50 to-surface-100 dark:from-dark-surface dark:to-dark-surface-light rounded-2xl border border-surface-200 dark:border-dark-border hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg dark:hover:shadow-black/30 transition-all duration-300 group cursor-pointer"
                   >
-                    <div className="absolute -top-6 -right-6 w-20 h-20 bg-surface-200 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500" />
+                    <div className="absolute -top-6 -right-6 w-20 h-20 bg-surface-200 dark:bg-dark-border rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500" />
                     <div className="relative">
                       <div className="flex items-center gap-3 mb-4">
                         <div
@@ -457,15 +467,15 @@ const Audience = () => {
                         >
                           <Icon className="w-5 h-5 text-white" />
                         </div>
-                        <span className="font-semibold text-text-primary">
+                        <span className="font-semibold text-text-primary dark:text-dark-text">
                           {device.type}
                         </span>
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-text-primary">
+                        <span className="text-3xl font-bold text-text-primary dark:text-dark-text">
                           {device.percentage}%
                         </span>
-                        <span className="text-sm text-text-muted">
+                        <span className="text-sm text-text-muted dark:text-dark-text-muted">
                           of views
                         </span>
                       </div>
@@ -479,24 +489,24 @@ const Audience = () => {
       </div>
 
       {/* Subscriber Growth */}
-      <div className="bg-white rounded-2xl border border-surface-300 shadow-sm overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-surface-200 gap-4">
+      <div className="bg-surface-50 dark:bg-dark-surface rounded-2xl border border-surface-300 dark:border-dark-border shadow-sm dark:shadow-black/20 overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between p-6 border-b border-surface-200 dark:border-dark-border gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 bg-accent-700 rounded-xl shadow-md">
               <IoTrendingUp className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-text-primary">
+              <h3 className="text-lg font-semibold text-text-primary dark:text-dark-text">
                 Subscriber Growth
               </h3>
-              <p className="text-sm text-text-muted">
+              <p className="text-sm text-text-muted dark:text-dark-text-muted">
                 Last 30 days performance
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-success-100 rounded-xl">
-            <IoTrendingUp className="w-4 h-4 text-success-600" />
-            <span className="text-sm font-bold text-success-600">
+          <div className="flex items-center gap-2 px-4 py-2 bg-success-100 dark:bg-success-900/30 rounded-xl">
+            <IoTrendingUp className="w-4 h-4 text-success-600 dark:text-success-400" />
+            <span className="text-sm font-bold text-success-600 dark:text-success-400">
               +12.5% growth
             </span>
           </div>
@@ -521,14 +531,14 @@ const Audience = () => {
                 </defs>
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  stroke="#e5e0e3"
+                  stroke="var(--color-surface-300)"
                   vertical={false}
                 />
                 <XAxis
                   dataKey="date"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#1e4d5e", fontSize: 12 }}
+                  tick={{ fill: "var(--color-text-muted)", fontSize: 12 }}
                   tickFormatter={(value) =>
                     new Date(value).toLocaleDateString("en-US", {
                       month: "short",
@@ -539,14 +549,14 @@ const Audience = () => {
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "#81837D", fontSize: 12 }}
+                  tick={{ fill: "var(--color-text-muted)", fontSize: 12 }}
                   tickFormatter={(value) => `${(value / 1000).toFixed(1)}K`}
                 />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload?.length) {
                       return (
-                        <div className="bg-dark-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-white/10">
+                        <div className="bg-text-primary dark:bg-dark-elevated text-white px-4 py-3 rounded-xl shadow-2xl border border-white/10 dark:border-dark-border">
                           <p className="text-sm text-white/70">
                             {new Date(
                               payload[0].payload.date,
@@ -564,7 +574,7 @@ const Audience = () => {
                 <Area
                   type="monotone"
                   dataKey="subscribers"
-                  stroke="#662843"
+                  stroke="#1e4d5e"
                   strokeWidth={3}
                   fill="url(#subGradient)"
                   dot={false}
@@ -572,7 +582,7 @@ const Audience = () => {
                     r: 6,
                     strokeWidth: 3,
                     stroke: "#fff",
-                    fill: "#662843",
+                    fill: "#1e4d5e",
                   }}
                 />
               </AreaChart>

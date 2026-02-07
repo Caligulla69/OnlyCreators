@@ -12,10 +12,9 @@ import Features from "./Features";
 import Hero from "./Hero";
 import Journey from "./Journey";
 import Testimonials from "./Testimonials";
-import Metrics from "./Metrics";
-import FinalCTA from "./CTA";
 import Navigation from "./Navbar";
 import Footer from "./Footer";
+import Pricing from "./Pricing";
 
 // ============================================
 // ONLY CREATORS - STORYTELLING LANDING PAGE
@@ -512,179 +511,6 @@ const ChapterHeading = ({ number, title, subtitle }) => {
 // PRICING SECTION
 // ============================================
 
-const Pricing = () => {
-  const plans = [
-    {
-      name: "Explorer",
-      chapter: "Chapter 1",
-      price: "Free",
-      period: "forever",
-      description: "For creators starting their journey",
-      features: [
-        "1 platform connected",
-        "Basic analytics dashboard",
-        "7-day data history",
-        "Weekly email reports",
-      ],
-      cta: "Start Free",
-      highlighted: false,
-    },
-    {
-      name: "Storyteller",
-      chapter: "Chapter 2",
-      price: "$29",
-      period: "/month",
-      description: "For creators ready to grow",
-      features: [
-        "All 3 platforms",
-        "AI-powered insights",
-        "Unlimited data history",
-        "Real-time analytics",
-        "Trend detection",
-        "Priority support",
-      ],
-      cta: "Start Free Trial",
-      highlighted: true,
-    },
-    {
-      name: "Legend",
-      chapter: "Chapter 3",
-      price: "Custom",
-      period: "",
-      description: "For creator teams & agencies",
-      features: [
-        "Everything in Storyteller",
-        "Unlimited team members",
-        "Custom AI models",
-        "API access",
-        "Dedicated success manager",
-      ],
-      cta: "Contact Sales",
-      highlighted: false,
-    },
-  ];
-
-  return (
-    <section
-      id="pricing"
-      className="py-32 px-6 bg-secondary-100 dark:bg-dark-bg"
-    >
-      <div className="max-w-6xl mx-auto">
-        <ChapterHeading
-          number="Six"
-          title="Choose Your Chapter"
-          subtitle="Every great story has a beginning. Choose yours."
-        />
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {plans.map((plan, i) => (
-            <FadeIn key={i} delay={i * 150}>
-              <div
-                className={`relative rounded-3xl p-8 h-full flex flex-col transition-all duration-500 ${
-                  plan.highlighted
-                    ? "bg-gradient-to-br from-primary-600 to-primary-700 dark:from-primary-500 dark:to-primary-600 text-white shadow-2xl scale-105"
-                    : "bg-white dark:bg-dark-surface border border-secondary-200 dark:border-dark-border hover:border-primary-200 dark:hover:border-primary-500 hover:shadow-xl"
-                }`}
-              >
-                {plan.highlighted && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-white text-primary-600 text-sm font-semibold rounded-full shadow-md">
-                    Most Popular
-                  </div>
-                )}
-
-                <div className="mb-6">
-                  <span
-                    className={`text-sm ${
-                      plan.highlighted
-                        ? "text-primary-200"
-                        : "text-text-light dark:text-dark-text-muted"
-                    }`}
-                  >
-                    {plan.chapter}
-                  </span>
-                  <h3
-                    className={`text-2xl font-serif font-semibold mt-1 ${
-                      plan.highlighted
-                        ? "text-white"
-                        : "text-text-primary dark:text-dark-text"
-                    }`}
-                  >
-                    {plan.name}
-                  </h3>
-                  <p
-                    className={`text-sm mt-2 ${
-                      plan.highlighted
-                        ? "text-primary-200"
-                        : "text-text-muted dark:text-dark-text-muted"
-                    }`}
-                  >
-                    {plan.description}
-                  </p>
-                </div>
-
-                <div className="mb-8">
-                  <span
-                    className={`text-5xl font-bold ${
-                      plan.highlighted
-                        ? "text-white"
-                        : "text-text-primary dark:text-dark-text"
-                    }`}
-                  >
-                    {plan.price}
-                  </span>
-                  {plan.period && (
-                    <span
-                      className={
-                        plan.highlighted
-                          ? "text-primary-200"
-                          : "text-text-muted dark:text-dark-text-muted"
-                      }
-                    >
-                      {plan.period}
-                    </span>
-                  )}
-                </div>
-
-                <ul className="space-y-4 mb-8 flex-1">
-                  {plan.features.map((feature, j) => (
-                    <li
-                      key={j}
-                      className={`flex items-center gap-3 ${
-                        plan.highlighted
-                          ? "text-primary-100"
-                          : "text-text-secondary dark:text-dark-text-muted"
-                      }`}
-                    >
-                      <Icons.Check
-                        className={
-                          plan.highlighted
-                            ? "text-white"
-                            : "text-primary-500 dark:text-primary-400"
-                        }
-                      />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  className={`w-full py-4 rounded-2xl font-semibold transition-all ${
-                    plan.highlighted
-                      ? "bg-white text-primary-600 hover:bg-secondary-50"
-                      : "bg-primary-600 dark:bg-primary-500 text-white hover:bg-primary-700 dark:hover:bg-primary-600"
-                  }`}
-                >
-                  {plan.cta}
-                </button>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // ============================================
 // MAIN APP
 // ============================================
@@ -732,17 +558,12 @@ export default function OnlyCreatorsStorytelling() {
             <Journey />
           </div>
           <div className="bg-secondary-100 dark:bg-dark-bg">
-            <Testimonials />
-          </div>
-          <div className="bg-primary-700 dark:bg-primary-900">
-            <Metrics />
-          </div>
-          <div className="bg-secondary-100 dark:bg-dark-bg">
             <Pricing />
           </div>
           <div className="bg-secondary-100 dark:bg-dark-bg">
-            <FinalCTA />
+            <Testimonials />
           </div>
+
           <Footer />
         </div>
       </div>

@@ -213,7 +213,7 @@ const Sidebar = () => {
 
             {/* Version */}
             <p className="text-center text-[10px] text-text-light dark:text-dark-text-muted mt-4">
-              v2.4.1 • © 2024 OnlyCreators
+              v2.4.1 • © 2025 OnlyCreators
             </p>
           </div>
         </div>

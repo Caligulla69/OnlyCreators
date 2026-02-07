@@ -27,20 +27,24 @@ const priorityConfig = {
 
 const categoryConfig = {
   Performance: {
-    bg: "bg-violet-100",
-    text: "text-violet-700",
-    icon: "text-violet-600",
+    bg: "bg-primary-100 dark:bg-primary-900/30",
+    text: "text-primary-700 dark:text-primary-300",
+    icon: "text-primary-600 dark:text-primary-400",
   },
-  Audience: { bg: "bg-cyan-100", text: "text-cyan-700", icon: "text-cyan-600" },
+  Audience: {
+    bg: "bg-accent-100 dark:bg-accent-900/30",
+    text: "text-accent-700 dark:text-accent-300",
+    icon: "text-accent-600 dark:text-accent-400",
+  },
   Trends: {
-    bg: "bg-emerald-100",
-    text: "text-emerald-700",
-    icon: "text-emerald-600",
+    bg: "bg-success-100 dark:bg-success-900/30",
+    text: "text-success-700 dark:text-success-300",
+    icon: "text-success-600 dark:text-success-400",
   },
   Optimization: {
-    bg: "bg-amber-100",
-    text: "text-amber-700",
-    icon: "text-amber-600",
+    bg: "bg-warning-100 dark:bg-warning-900/30",
+    text: "text-warning-700 dark:text-warning-300",
+    icon: "text-warning-600 dark:text-warning-400",
   },
 };
 
@@ -53,18 +57,18 @@ const InsightCard = ({ insight, onApply, onDismiss, isApplied = false }) => {
   return (
     <div
       className={`
-      relative bg-white rounded-2xl border transition-all duration-300 overflow-hidden group
+      relative bg-surface-50 dark:bg-dark-surface rounded-2xl border transition-all duration-300 overflow-hidden group
       ${
         isApplied
-          ? "border-emerald-200 bg-emerald-50/50"
-          : "border-gray-100 hover:border-primary-200 hover:shadow-lg"
+          ? "border-success-200 dark:border-success-800 bg-success-50/50 dark:bg-success-900/10"
+          : "border-surface-200 dark:border-dark-border hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-lg dark:hover:shadow-black/30"
       }
     `}
     >
       {/* Applied Overlay */}
       {isApplied && (
         <div className="absolute top-4 right-4 z-10">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500 text-white rounded-full text-sm font-medium">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 bg-success-500 dark:bg-success-600 text-white rounded-full text-sm font-medium">
             <IoCheckmarkCircle className="w-4 h-4" />
             Applied
           </div>
@@ -78,12 +82,12 @@ const InsightCard = ({ insight, onApply, onDismiss, isApplied = false }) => {
             <Icon className={`w-6 h-6 ${category.icon}`} />
             {/* Priority Dot */}
             <span
-              className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-white flex items-center justify-center text-[8px] ${
+              className={`absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-surface-50 dark:border-dark-surface flex items-center justify-center text-[8px] ${
                 insight.priority === "High"
-                  ? "bg-red-500"
+                  ? "bg-error-500"
                   : insight.priority === "Medium"
-                    ? "bg-amber-500"
-                    : "bg-gray-400"
+                    ? "bg-warning-500"
+                    : "bg-surface-400 dark:bg-dark-border"
               }`}
             />
           </div>
@@ -93,23 +97,29 @@ const InsightCard = ({ insight, onApply, onDismiss, isApplied = false }) => {
               <Badge variant={priority.color} size="sm">
                 {insight.priority} Priority
               </Badge>
-              <span className="text-xs text-gray-400">•</span>
-              <span className="text-xs text-gray-500">{insight.category}</span>
+              <span className="text-xs text-text-light dark:text-dark-text-muted">
+                •
+              </span>
+              <span className="text-xs text-text-muted dark:text-dark-text-muted">
+                {insight.category}
+              </span>
             </div>
-            <h3 className="font-semibold text-gray-900 text-lg">
+            <h3 className="font-semibold text-text-primary dark:text-dark-text text-lg">
               {insight.title}
             </h3>
           </div>
         </div>
 
         {/* Message */}
-        <p className="text-gray-600 mb-4 leading-relaxed">{insight.message}</p>
+        <p className="text-text-secondary dark:text-dark-text-muted mb-4 leading-relaxed">
+          {insight.message}
+        </p>
 
         {/* Impact Badge */}
         {insight.impact && !isApplied && (
-          <div className="inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl mb-4">
-            <IoTrendingUp className="w-4 h-4 text-emerald-600" />
-            <span className="text-sm font-semibold text-emerald-700">
+          <div className="inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-success-50 to-primary-50 dark:from-success-900/20 dark:to-primary-900/20 border border-success-200 dark:border-success-700/50 rounded-xl mb-4">
+            <IoTrendingUp className="w-4 h-4 text-success-600 dark:text-success-400" />
+            <span className="text-sm font-semibold text-success-700 dark:text-success-300">
               {insight.impact}
             </span>
           </div>
@@ -117,7 +127,7 @@ const InsightCard = ({ insight, onApply, onDismiss, isApplied = false }) => {
 
         {/* Actions */}
         {!isApplied && insight.actionable && insight.actions && (
-          <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+          <div className="flex items-center gap-3 pt-4 border-t border-surface-200 dark:border-dark-border">
             <Button
               variant="primary"
               size="sm"
