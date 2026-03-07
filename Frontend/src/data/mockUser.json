@@ -1,0 +1,40 @@
+{
+  "id": "user_123",
+  "name": "Sarah Johnson",
+  "email": "sarah.johnson@example.com",
+  "channelName": "TechCreator Daily",
+  "subscriberCount": 45200,
+  "profilePicture": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
+  "bio": "Full-stack developer sharing coding tutorials and tech insights. Making complex topics simple and fun!",
+  "joinedDate": "2023-06-15",
+  "connectedAccounts": {
+    "youtube": {
+      "connected": true,
+      "channelId": "UC123456789",
+      "channelName": "TechCreator Daily",
+      "channelThumbnail": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=88&h=88&fit=crop&crop=face"
+    },
+    "instagram": {
+      "connected": false
+    },
+    "tiktok": {
+      "connected": false
+    }
+  },
+  "preferences": {
+    "theme": "light",
+    "language": "en",
+    "timezone": "America/New_York",
+    "notifications": {
+      "email": {
+        "performanceMilestones": true,
+        "trendingOpportunities": true,
+        "weeklySummary": true
+      },
+      "inApp": {
+        "realTimeAlerts": true,
+        "insightUpdates": true
+      }
+    }
+  }
+}
