@@ -1,13 +1,17 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
 /**
  * Protect routes - Verify JWT token and attach user to request
+ *
+ * NOTE: JWT_SECRET is read from process.env at request time (not module load)
+ * because in serverless environments (Vercel), dotenv may not have been
+ * configured yet when this module is first imported.
  */
 const protect = async (req, res, next) => {
-  if (!JWT_SECRET) {
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
     console.error(
       "❌ FATAL: JWT_SECRET environment variable is not set. " +
         "Set it in your Vercel project settings or .env file.",
@@ -42,7 +46,7 @@ const protect = async (req, res, next) => {
 
   try {
     // Verify token
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, jwtSecret);
 
     // Find user by decoded id and attach to request
     const user = await User.findById(decoded.id);

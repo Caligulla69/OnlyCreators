@@ -1,38 +1,39 @@
 const mongoose = require("mongoose");
 
 /**
- * Cached connection for serverless environments (Vercel).
+ * Cached connection promise for serverless environments (Vercel).
+ *
  * In serverless, each cold start re-imports modules, but the global scope
  * persists across warm invocations within the same container.
+ *
+ * Instead of using a fragile polling-based wait with setInterval, we cache
+ * the connection *promise* itself. If multiple requests arrive concurrently
+ * during a cold start, they all await the same promise — no races, no polling.
  */
-let cachedConnection = null;
-let isConnecting = false;
+let cachedConnectionPromise = null;
 
 const connectDB = async () => {
-  // If we already have a ready connection, reuse it
-  if (cachedConnection && mongoose.connection.readyState === 1) {
-    return cachedConnection;
+  // If we already have a ready connection, reuse it immediately
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
   }
 
-  // If a connection attempt is already in progress, wait for it
-  if (isConnecting) {
-    // Wait until the existing connection attempt resolves
-    await new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (!isConnecting) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 100);
-    });
-    if (cachedConnection && mongoose.connection.readyState === 1) {
-      return cachedConnection;
+  // If a connection attempt is already in flight, piggyback on it
+  // instead of starting a duplicate connection
+  if (cachedConnectionPromise) {
+    try {
+      await cachedConnectionPromise;
+      if (mongoose.connection.readyState === 1) {
+        return mongoose.connection;
+      }
+    } catch {
+      // Previous attempt failed — fall through to retry below
+      cachedConnectionPromise = null;
     }
   }
 
-  isConnecting = true;
-
-  try {
+  // Start a new connection attempt and cache the promise
+  cachedConnectionPromise = (async () => {
     const mongoURI = process.env.MONGODB_URI;
 
     if (!mongoURI) {
@@ -58,34 +59,41 @@ const connectDB = async () => {
 
     const conn = await mongoose.connect(mongoURI, options);
 
-    cachedConnection = conn.connection;
-
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`   Database: ${conn.connection.name}`);
 
-    // Handle connection events
-    mongoose.connection.on("error", (err) => {
-      console.error(`❌ MongoDB connection error: ${err.message}`);
-      cachedConnection = null;
-    });
+    return conn.connection;
+  })();
 
-    mongoose.connection.on("disconnected", () => {
-      console.warn("⚠️  MongoDB disconnected");
-      cachedConnection = null;
-    });
+  try {
+    const connection = await cachedConnectionPromise;
 
-    mongoose.connection.on("reconnected", () => {
-      console.log("✅ MongoDB reconnected successfully");
-      cachedConnection = mongoose.connection;
-    });
+    // Handle connection events (only wire these up once)
+    if (!mongoose.connection._hasCustomListeners) {
+      mongoose.connection._hasCustomListeners = true;
 
-    return cachedConnection;
+      mongoose.connection.on("error", (err) => {
+        console.error(`❌ MongoDB connection error: ${err.message}`);
+        // Invalidate the cached promise so the next request retries
+        cachedConnectionPromise = null;
+      });
+
+      mongoose.connection.on("disconnected", () => {
+        console.warn("⚠️  MongoDB disconnected");
+        cachedConnectionPromise = null;
+      });
+
+      mongoose.connection.on("reconnected", () => {
+        console.log("✅ MongoDB reconnected successfully");
+      });
+    }
+
+    return connection;
   } catch (error) {
-    cachedConnection = null;
+    // Invalidate so subsequent requests can retry
+    cachedConnectionPromise = null;
     console.error(`❌ MongoDB Connection Failed: ${error.message}`);
     throw error;
-  } finally {
-    isConnecting = false;
   }
 };
 
